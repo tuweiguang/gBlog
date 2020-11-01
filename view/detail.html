@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="/static/lib/layui/css/layui.css" />
+<link rel="stylesheet" href="/static/md/css/editormd.preview.css" />
+<link rel="stylesheet" href="/static/default/css/blog-common.min.css" />
+<link id="MainCss" rel="stylesheet" href="/static/default/css/bundle-codinglife.min.css" />
+
+{{define "view/detail.html"}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<style>
+    blockquote{
+        border:none;
+    }
+</style>
+<div id="main">
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-md-9">
+
+                <div class="box">
+                    <div id="markdown" class="cell slim page-box markdown-body editormd-html-preview" style="padding-top: 20px">
+                        {{.data}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>
+{{end}}
