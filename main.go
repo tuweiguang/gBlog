@@ -1,28 +1,30 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"html/template"
-	"net/http"
+	"fmt"
+	"gBlog/controllers"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 func main() {
-	r := gin.Default()
+	controllers.DefaultServerRun()
 
-	r.LoadHTMLGlob("view/*")
-
-	r.GET("/detail", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "view/detail.html", gin.H{
-			// template.HTML 让模板中的参数不要做HTML转义
-			"data": template.HTML(""),
-		})
-	})
-
-	r.GET("/hello", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "hello world!",
-		})
-	})
-
-	r.Run()
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
+	for {
+		s := <-c
+		fmt.Printf("get a signal %s", s.String())
+		switch s {
+		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
+			fmt.Println("gBlog exit")
+			time.Sleep(time.Second)
+			return
+		case syscall.SIGHUP:
+		default:
+			return
+		}
+	}
 }
