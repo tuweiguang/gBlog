@@ -1,0 +1,29 @@
+[[db]]
+    dbType = "mysql"
+    host = "127.0.0.1"
+    port = 3306
+    user = "root"
+    password = "123456"
+    dbName = "gBlog"
+    dbCharset = "utf8"
+    active = 20
+    idle = 10
+    idleTimeout ="4h"
+    queryTimeout = "200ms"
+    execTimeout = "300ms"
+    tranTimeout = "400ms"
+
+#[[db]]
+#    dbType = "mysql2"
+#    host = "127.0.0.1"
+#    port = 3306
+#    user = "root"
+#    password = "123456"
+#    dbName = "gBlog"
+#    dbCharset = "utf8"
+#    active = 20
+#    idle = 10
+#    idleTimeout ="4h"
+#    queryTimeout = "200ms"
+#    execTimeout = "300ms"
+#    tranTimeout = "400ms"

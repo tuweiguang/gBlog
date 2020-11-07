@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"gBlog/commom/config"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
@@ -30,5 +31,5 @@ func init() {
 }
 
 func DefaultServerRun() {
-	go engine.Run(":8080")
+	go engine.Run(config.GetAPPConfig().HttpAddr)
 }
