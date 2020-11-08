@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"gBlog/commom/db"
+	"time"
+)
 
 type User struct {
 	Id       int       `gorm:"primary_key;column:id"`
@@ -13,4 +16,15 @@ type User struct {
 
 func (User) TableName() string {
 	return "user"
+}
+
+func GetUser(username string) *User {
+	if username == "" {
+		return nil
+	}
+
+	user := new(User)
+
+	db.GetMySQL().First(user, "name=?", username)
+	return user
 }

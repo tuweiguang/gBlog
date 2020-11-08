@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"gBlog/commom/config"
+	"gBlog/controllers/admin"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
@@ -19,15 +20,15 @@ func init() {
 		})
 	})
 
+	userCtl := new(admin.UserCtl)
 	admin := engine.Group("/admin")
 	{
-		admin.GET("/list", func(c *gin.Context) {
-
-		})
-		admin.POST("/ssave", func(c *gin.Context) {
-
-		})
+		admin.GET("/login", userCtl.Login)
 	}
+
+	engine.GET("/admin", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{})
+	})
 }
 
 func DefaultServerRun() {

@@ -2,6 +2,8 @@ package db
 
 import (
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
+
 	"gBlog/commom/config"
 	"gBlog/commom/log"
 
@@ -10,7 +12,7 @@ import (
 
 type MySQL struct{}
 
-func (m *MySQL) init(dbI SQL) *gorm.DB {
+func (m *MySQL) init(dbI SQL) interface{} {
 	c, ok := dbI.(config.DB)
 	if !ok {
 		log.GetLog().Error("mysql init fail")

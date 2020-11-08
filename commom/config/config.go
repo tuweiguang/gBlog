@@ -25,11 +25,12 @@ type DB struct {
 	QueryTimeout string `toml:"queryTimeout"`
 	ExecTimeout  string `toml:"execTimeout"`
 	TranTimeout  string `toml:"tranTimeout"`
+	DbNum        int    `toml:"dbNum"`
 }
 
 func (db *DB) String() string {
-	return fmt.Sprintf("{DbType:%v,Host:%v,Port:%v,User:%v,Password:%v,DbName:%v,DbCharset:%v,Active:%v,Idle:%v,IdleTimeout:%v,QueryTimeout:%v,ExecTimeout:%v,TranTimeout:%v}",
-		db.DbType, db.Host, db.Port, db.User, db.Password, db.DbName, db.DbCharset, db.Active, db.Idle, db.IdleTimeout, db.QueryTimeout, db.ExecTimeout, db.TranTimeout)
+	return fmt.Sprintf("{DbType:%v,Host:%v,Port:%v,User:%v,Password:%v,DbName:%v,DbCharset:%v,Active:%v,Idle:%v,IdleTimeout:%v,QueryTimeout:%v,ExecTimeout:%v,TranTimeout:%v,DbNum:%v}",
+		db.DbType, db.Host, db.Port, db.User, db.Password, db.DbName, db.DbCharset, db.Active, db.Idle, db.IdleTimeout, db.QueryTimeout, db.ExecTimeout, db.TranTimeout, db.DbNum)
 }
 
 var Db *DBConfig

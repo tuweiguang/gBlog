@@ -13,12 +13,13 @@ import (
 	"time"
 )
 
+// go run main.go -conf ./conf
 func main() {
 	flag.Parse()
 
 	config.Init() // flag: -conf ./conf 指定配置文件目录
 	log.Init()
-	db.Init()
+	//db.Init()
 
 	controllers.DefaultServerRun()
 
