@@ -1,2 +1,2 @@
 [app]
-    httpAddr = "127.0.0.1:8080"
+    httpAddr = "localhost:8080" # 必须是域名,不然设置重定向cookie丢失
