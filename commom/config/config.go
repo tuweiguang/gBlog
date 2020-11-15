@@ -41,7 +41,8 @@ type APPConfig struct {
 }
 
 type APP struct {
-	HttpAddr string `toml:"httpAddr"`
+	HttpAddr      string `toml:"httpAddr"`
+	SessionExpire int    `toml:"sessionExpire"`
 }
 
 var App *APPConfig

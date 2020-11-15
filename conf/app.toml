@@ -1,2 +1,3 @@
 [app]
     httpAddr = "localhost:8080" # 必须是域名,不然设置重定向cookie丢失
+    sessionExpire = 60 # session过期时间,秒

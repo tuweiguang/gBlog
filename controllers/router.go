@@ -26,14 +26,14 @@ func init() {
 	//	})
 	//})
 
-	engine.GET("/login", admin.Login)
+	engine.Use(middleware.PrintSession())
+	engine.Any("/login", admin.Login)
 
-	userCtl := new(admin.UserCtl)
-	admin := engine.Group("/admin", middleware.Validate())
+	adminCtl := engine.Group("/admin", middleware.Validate())
 	{
-		admin.GET("/list", userCtl.List)
+		adminCtl.GET("/list", admin.List)
 
-		admin.GET("welcome", userCtl.Welcome)
+		adminCtl.GET("welcome", admin.Welcome)
 	}
 
 	engine.GET("/admin", middleware.Validate(), func(c *gin.Context) {
