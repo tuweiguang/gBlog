@@ -32,6 +32,7 @@ func main() {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 			fmt.Println("gBlog exit")
 			db.Close()
+			log.GetLog().Sync()
 			time.Sleep(time.Second)
 			return
 		case syscall.SIGHUP:

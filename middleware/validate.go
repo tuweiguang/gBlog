@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"gBlog/commom/log"
 	"gBlog/pkg/session"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -13,6 +14,7 @@ func Validate() gin.HandlerFunc {
 		if err == nil {
 			// 到本地或者redis里面去验证sessionId
 			if status := session.NewMemoryMgr().CheckSession(cookie); status > session.SessionExist {
+				log.GetLog().Info("invalid cookie!")
 				if status == session.SessionExpire {
 					// 删除session
 					session.NewMemoryMgr().DelSession(cookie)
@@ -25,6 +27,7 @@ func Validate() gin.HandlerFunc {
 			}
 			c.Next() //该句可以省略，写出来只是表明可以进行验证下一步中间件，不写，也是内置会继续访问下一个中间件的
 		} else {
+			log.GetLog().Info("No cookie!")
 			c.Abort()
 			c.Redirect(http.StatusMovedPermanently, "/login")
 			return // return也是可以省略的，执行了abort操作，会内置在中间件defer前，return，写出来也只是解答为什么Abort()之后，还能执行返回JSON数据

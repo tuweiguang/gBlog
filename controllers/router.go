@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"gBlog/commom/config"
+	"gBlog/commom/util"
 	"gBlog/controllers/admin"
 	"gBlog/middleware"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"net/http"
 )
 
@@ -12,6 +14,13 @@ var engine *gin.Engine
 
 func init() {
 	engine = gin.Default()
+
+	// 设置模板函数
+	engine.SetFuncMap(template.FuncMap{
+		"IndexForOne":  util.IndexForOne,
+		"IndexDecrOne": util.IndexDecrOne,
+		"IndexAddOne":  util.IndexAddOne,
+	})
 
 	//渲染模板
 	engine.LoadHTMLGlob("view/*")
@@ -26,6 +35,11 @@ func init() {
 	//	})
 	//})
 
+	// 1.无需认证
+	// /list.html
+	// /detail/:id([0-9]+).html
+
+	// 2.需要认证
 	engine.Use(middleware.PrintSession())
 	engine.Any("/login", admin.Login)
 
@@ -33,14 +47,31 @@ func init() {
 	{
 		adminCtl.GET("/list", admin.List)
 
-		adminCtl.GET("welcome", admin.Welcome)
+		adminCtl.GET("/welcome", admin.Welcome)
+
+		adminCtl.GET("/user", func(context *gin.Context) {})
+		adminCtl.GET("/user/add", func(context *gin.Context) {})
+
+		adminCtl.GET("/article", func(context *gin.Context) {})
+		adminCtl.GET("/article/edit", func(context *gin.Context) {})
+		adminCtl.GET("/article/delete", func(context *gin.Context) {})
+		adminCtl.GET("/article/update", func(context *gin.Context) {})
+		adminCtl.GET("/article/add", func(context *gin.Context) {})
+		adminCtl.GET("/article/top", func(context *gin.Context) {})
+		adminCtl.GET("/article/get", func(context *gin.Context) {})
+
+		adminCtl.GET("/cate", func(context *gin.Context) {})
+		adminCtl.GET("/cate/add", func(context *gin.Context) {})
+		adminCtl.GET("/cate/edit", func(context *gin.Context) {})
+		adminCtl.GET("/cate/delete", func(context *gin.Context) {})
+		adminCtl.GET("/cate/update", func(context *gin.Context) {})
 	}
 
 	engine.GET("/admin", middleware.Validate(), func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 
-	//没有匹配到走下面
+	// 3.没有匹配到走下面
 	engine.NoRoute(func(c *gin.Context) {
 		c.HTML(http.StatusNotFound, "404.html", nil)
 	})

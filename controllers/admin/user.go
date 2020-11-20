@@ -2,6 +2,8 @@ package admin
 
 import (
 	"fmt"
+	"gBlog/commom/config"
+	"gBlog/commom/sys"
 	"gBlog/pkg/session"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -33,7 +35,8 @@ func Login(c *gin.Context) {
 				// 设置session
 				// value不能为1??
 				// maxAge最好和session保存时间一样
-				c.SetCookie("sessionId", sessionId, 60, "/", "localhost", false, true)
+				// httpOnly:true  js 脚本不能获取 cookie，可以防止跨站攻击，增加爬虫程序的难度
+				c.SetCookie("sessionId", sessionId, config.GetAPPConfig().SessionExpire, "/", "localhost", false, true)
 			} else {
 				// 到本地或者redis里面去验证sessionId
 				if status := session.NewMemoryMgr().CheckSession(sessionId); status > session.SessionExist {
@@ -62,9 +65,14 @@ func Login(c *gin.Context) {
 }
 
 func List(c *gin.Context) {
-	c.HTML(http.StatusOK, "login.html", gin.H{})
+	c.HTML(http.StatusOK, "user-list.html", gin.H{
+		"Status": 1,
+	})
 }
 
 func Welcome(c *gin.Context) {
-	c.HTML(http.StatusOK, "welcome.html", gin.H{})
+	df, _ := sys.Df()
+	c.HTML(http.StatusOK, "welcome.html", gin.H{
+		"Df": df,
+	})
 }

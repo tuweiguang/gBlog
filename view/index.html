@@ -56,6 +56,45 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="文章管理">&#xe723;</i>
+                            <cite>文章管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('文章抓取','/admin/list')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>文章抓取</cite>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('文章列表','/admin/list')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>文章列表</cite>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('评论列表','/admin/list')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>评论列表</cite>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="类别管理">&#xe723;</i>
+                            <cite>类别管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('多级分类','/admin/list')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>多级分类</cite></a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -75,7 +114,7 @@
                 </div>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        <iframe src="/admin/Welcome" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                        <iframe src="/admin/welcome" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
                     </div>
                 </div>
                 <div id="tab_show"></div>
