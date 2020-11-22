@@ -1,72 +1,37 @@
 package admin
 
 import (
-	"fmt"
-	"gBlog/commom/config"
 	"gBlog/commom/sys"
-	"gBlog/pkg/session"
+	"gBlog/models"
 	"github.com/gin-gonic/gin"
+	"math"
 	"net/http"
 )
 
-type LoginInfo struct {
-	Username string `form:"username" binding:"required"`
-	Password string `form:"password" binding:"required"`
-}
+const LIMIT = 10 //一页10条记录
+const ONLINE = 1
+const UNSALE = 2
+const DELETE = 3
 
-func Login(c *gin.Context) {
-	if c.Request.Method == "POST" {
-		var info LoginInfo
-		err := c.ShouldBind(&info)
-		if err != nil {
-			c.HTML(http.StatusOK, "login.html", gin.H{
-				"err": "账号或密码不能为空!",
-			})
-			return
-		}
-		fmt.Printf("=============> username:%v,password:%v", info.Username, info.Password)
-		// 应该去数据库去验证
-		if len(info.Username) > 0 && len(info.Password) > 0 {
-			sessionId, err := c.Cookie("sessionId")
-			if err != nil {
-				// 第一次来，没有sessionid，-->给用户建一个sessiondata，分配一个sessionid
-				sessionId = session.NewMemoryMgr().CreateSessoin()
-
-				// 设置session
-				// value不能为1??
-				// maxAge最好和session保存时间一样
-				// httpOnly:true  js 脚本不能获取 cookie，可以防止跨站攻击，增加爬虫程序的难度
-				c.SetCookie("sessionId", sessionId, config.GetAPPConfig().SessionExpire, "/", "localhost", false, true)
-			} else {
-				// 到本地或者redis里面去验证sessionId
-				if status := session.NewMemoryMgr().CheckSession(sessionId); status > session.SessionExist {
-					if status == session.SessionExpire {
-						// 删除session
-						session.NewMemoryMgr().DelSession(sessionId)
-					}
-
-					// sessionId不存在或者过期，需要重新登陆
-					c.HTML(http.StatusOK, "login.html", gin.H{
-						"err": "账号登陆过期，请重新登陆!",
-					})
-				}
-			}
-
-			// 重定向
-			c.Redirect(http.StatusMovedPermanently, "/admin")
-			return
-		}
-		c.HTML(http.StatusOK, "login.html", gin.H{
-			"err": "账号或密码不正确，请重新输入!",
-		})
-	} else {
-		c.HTML(http.StatusOK, "login.html", gin.H{})
-	}
-}
+var Status = map[int]string{ONLINE: "在线", UNSALE: "下架", DELETE: "删除"}
 
 func List(c *gin.Context) {
+	page := c.GetInt("page")
+	if page < 1 {
+		page = 1
+	}
+
+	name := c.Query("name")
+	status := c.GetInt("status")
+
+	some := models.GetSomeUser((page-1)*LIMIT, LIMIT)
+
 	c.HTML(http.StatusOK, "user-list.html", gin.H{
-		"Status": 1,
+		"Status":     status,
+		"Name":       name,
+		"Data":       some,
+		"Paginator":  GenPaginator(page, LIMIT, len(some)),
+		"StatusText": Status,
 	})
 }
 
@@ -75,4 +40,20 @@ func Welcome(c *gin.Context) {
 	c.HTML(http.StatusOK, "welcome.html", gin.H{
 		"Df": df,
 	})
+}
+
+type Paginator struct {
+	CurrentPage int `json:"currentPage"` //当前页
+	PageSize    int `json:"pageSize"`    //每页数量
+	TotalPage   int `json:"totalPage"`   //总页数
+	TotalCount  int `json:"totalCount"`  //总数量
+}
+
+func GenPaginator(page, limit, count int) Paginator {
+	var paginator Paginator
+	paginator.TotalCount = count
+	paginator.TotalPage = int(math.Ceil(float64(count) / float64(limit)))
+	paginator.PageSize = limit
+	paginator.CurrentPage = page
+	return paginator
 }

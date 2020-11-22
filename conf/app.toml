@@ -1,3 +1,5 @@
 [app]
     httpAddr = "localhost:8080" # 必须是域名,不然设置重定向cookie丢失
     sessionExpire = 3600 # session过期时间,秒
+
+    logMode = true # gorm是否打印sql语句

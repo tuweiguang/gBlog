@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"gBlog/commom/config"
 	"gBlog/commom/log"
 	"github.com/jinzhu/gorm"
@@ -32,6 +33,7 @@ func Init() {
 			continue
 		}
 		instances[db.DbType] = base.init(db)
+		log.GetLog().Info(fmt.Sprintf("%v init success", db.DbType))
 	}
 }
 
@@ -54,7 +56,7 @@ func Close() {
 	}
 }
 
-var instances map[string]interface{}
+var instances = make(map[string]interface{})
 
 // 获取 mysql连接
 func GetMySQL() *gorm.DB {

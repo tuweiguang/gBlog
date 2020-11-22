@@ -48,7 +48,7 @@
                             </form>
                         </div>
                         <div class="layui-card-header">
-                            <button class="layui-btn" onclick="xadmin.open('添加文章','/admin/UserController/Add','','',true)">
+                            <button class="layui-btn" onclick="xadmin.open('添加文章','/admin/user/Add','','',true)">
                                 <i class="layui-icon"></i>添加</button></div>
                         <div class="layui-card-body ">
                             <table class="layui-table layui-form">
@@ -74,7 +74,7 @@
                                         </td>
 
                                         <td class="td-manage">
-                                            <a title="查看" onclick="xadmin.open('编辑','/admin/UserController/Put?id={{$value.Id}}','','',true)" href="javascript:;">
+                                            <a title="查看" onclick="xadmin.open('编辑','/admin/user/Put?id={{$value.Id}}','','',true)" href="javascript:;">
                                                 <i class="layui-icon">&#xe63c;</i></a>
                                         </td>
                                     </tr>
@@ -87,10 +87,10 @@
                                 <div>
                                     <span class="current">{{.Paginator.CurrentPage}}</span>
                                     {{if gt .Paginator.CurrentPage 1}}
-                                        <a class="prev" href="/admin/ArticleController/List?page={{IndexDecrOne $.Paginator.CurrentPage}}&start={{if .Start}}{{.Start}}{{end}}&end={{if .End}}{{.End}}{{end}}&status={{if .Status}}{{.Status}}{{end}}&title={{if .Title}}{{.Title}}{{end}}">上一页</a>
+                                        <a class="prev" href="/admin/user/List?page={{IndexDecrOne $.Paginator.CurrentPage}}&start={{if .Start}}{{.Start}}{{end}}&end={{if .End}}{{.End}}{{end}}&status={{if .Status}}{{.Status}}{{end}}&title={{if .Title}}{{.Title}}{{end}}">上一页</a>
                                     {{end}}
                                     {{if lt .Paginator.CurrentPage .Paginator.TotalPage}}
-                                        <a class="next" href="/admin/ArticleController/List?page={{IndexAddOne $.Paginator.CurrentPage}}&start={{if .Start}}{{.Start}}{{end}}&end={{if .End}}{{.End}}{{end}}&status={{if .Status}}{{.Status}}{{end}}&title={{if .Title}}{{.Title}}{{end}}">下一页</a>
+                                        <a class="next" href="/admin/user/List?page={{IndexAddOne $.Paginator.CurrentPage}}&start={{if .Start}}{{.Start}}{{end}}&end={{if .End}}{{.End}}{{end}}&status={{if .Status}}{{.Status}}{{end}}&title={{if .Title}}{{.Title}}{{end}}">下一页</a>
                                     {{end}}
                                     <span class="num">总 {{.Paginator.TotalPage}} 页</span>
                                 </div>

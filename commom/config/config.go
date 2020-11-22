@@ -33,7 +33,7 @@ func (db *DB) String() string {
 		db.DbType, db.Host, db.Port, db.User, db.Password, db.DbName, db.DbCharset, db.Active, db.Idle, db.IdleTimeout, db.QueryTimeout, db.ExecTimeout, db.TranTimeout, db.DbNum)
 }
 
-var Db *DBConfig
+var db *DBConfig
 
 type APPConfig struct {
 	Title string
@@ -43,9 +43,10 @@ type APPConfig struct {
 type APP struct {
 	HttpAddr      string `toml:"httpAddr"`
 	SessionExpire int    `toml:"sessionExpire"`
+	LogMode       bool   `toml:"logMode"`
 }
 
-var App *APPConfig
+var app *APPConfig
 
 type LOGConfig struct {
 	Title string
@@ -57,54 +58,54 @@ type LOG struct {
 	Level string `toml:"level"`
 }
 
-var Log *LOGConfig
+var logConfig *LOGConfig
 
 var confPath = flag.String("conf", "./conf", "配置文件目录")
 
 func Init() {
 	dbFile := *confPath + "/db.toml"
 	log.Printf("config init ,dbFile %v", dbFile)
-	Db = new(DBConfig)
-	_, err := toml.DecodeFile(dbFile, Db)
+	db = new(DBConfig)
+	_, err := toml.DecodeFile(dbFile, db)
 	if err != nil {
 		panic("加载db配置文件错误:" + err.Error())
 	}
-	log.Printf("config init, DBConfig:%v", Db.Db)
+	log.Printf("config init, DBConfig:%v", db.Db)
 
 	logFile := *confPath + "/log.toml"
-	Log = new(LOGConfig)
-	_, err = toml.DecodeFile(logFile, Log)
+	logConfig = new(LOGConfig)
+	_, err = toml.DecodeFile(logFile, logConfig)
 	if err != nil {
 		panic("加载log配置文件错误:" + err.Error())
 	}
-	log.Printf("config init, LOGConfig:%v", Log)
+	log.Printf("config init, LOGConfig:%v", logConfig)
 
 	appFile := *confPath + "/app.toml"
-	App = new(APPConfig)
-	_, err = toml.DecodeFile(appFile, App)
+	app = new(APPConfig)
+	_, err = toml.DecodeFile(appFile, app)
 	if err != nil {
 		panic("加载app配置文件错误:" + err.Error())
 	}
-	log.Printf("config init, APPConfig:%v", App)
+	log.Printf("config init, APPConfig:%v", app)
 }
 
 func GetDBConfig() []*DB {
-	if Db.Db == nil {
+	if db.Db == nil {
 		return []*DB{}
 	}
-	return Db.Db
+	return db.Db
 }
 
 func GetAPPConfig() *APP {
-	if App.App == nil {
+	if app.App == nil {
 		return &APP{}
 	}
-	return App.App
+	return app.App
 }
 
 func GetLOGConfig() *LOG {
-	if Log.Log == nil {
+	if logConfig.Log == nil {
 		return &LOG{}
 	}
-	return Log.Log
+	return logConfig.Log
 }

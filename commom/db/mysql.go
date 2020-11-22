@@ -13,7 +13,7 @@ import (
 type MySQL struct{}
 
 func (m *MySQL) init(dbI SQL) interface{} {
-	c, ok := dbI.(config.DB)
+	c, ok := dbI.(*config.DB)
 	if !ok {
 		log.GetLog().Error("mysql init fail")
 		panic("mysql init fail")
@@ -25,5 +25,17 @@ func (m *MySQL) init(dbI SQL) interface{} {
 		log.Log.Error(err.Error())
 		panic("mysql init open fail")
 	}
+
+	err = db.DB().Ping()
+	if err != nil {
+		db.Close()
+		log.Log.Error("mysql init ,ping error")
+		panic("mysql init ,ping error")
+	}
+
+	if config.GetAPPConfig().LogMode {
+		db.LogMode(true)
+	}
+
 	return db
 }

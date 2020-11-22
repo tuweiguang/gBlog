@@ -19,7 +19,7 @@ func main() {
 
 	config.Init() // flag: -conf ./conf 指定配置文件目录
 	log.Init()
-	//db.Init()
+	db.Init()
 
 	controllers.DefaultServerRun()
 
@@ -30,7 +30,7 @@ func main() {
 		fmt.Printf("get a signal %s", s.String())
 		switch s {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
-			fmt.Println("gBlog exit")
+			controllers.Shutdown()
 			db.Close()
 			log.GetLog().Sync()
 			time.Sleep(time.Second)

@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"gBlog/commom/config"
 	"gBlog/commom/log"
 	"github.com/go-redis/redis/v8"
@@ -12,10 +13,10 @@ import (
 type Redis struct{}
 
 func (r *Redis) init(dbI SQL) interface{} {
-	c, ok := dbI.(config.DB)
+	c, ok := dbI.(*config.DB)
 	if !ok {
-		log.GetLog().Error("mysql init fail")
-		panic("mysql init fail")
+		log.GetLog().Error("redis init, config error")
+		panic("redis init, config error")
 	}
 
 	rdb := redis.NewClient(&redis.Options{
@@ -24,6 +25,17 @@ func (r *Redis) init(dbI SQL) interface{} {
 		DB:       c.DbNum,    // use default DB
 	})
 
+	if rdb == nil {
+		log.GetLog().Error("redis init fail")
+		panic("redis init fail")
+	}
+
+	err := rdb.Ping(ctx).Err()
+	if err != nil {
+		rdb.Close()
+		log.GetLog().Error(fmt.Sprintf("redis init, ping fail,err = %v", err))
+		panic(fmt.Sprintf("redis init, ping fail,err = %v", err))
+	}
 	return &GRedis{rdb: rdb}
 }
 
