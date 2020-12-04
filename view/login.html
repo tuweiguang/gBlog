@@ -70,23 +70,151 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>gBlog - 后台管理登录</title>
+	<style type="text/css">
+		*{/*所有标签基础样式并不是body*/
+			margin: 0px;
+			padding: 0px;
+		}
+		body{
+			background-image: url("../static/images/login.jpg");
+			background-repeat: no-repeat;
+			/*background-size: 100%;*/
+			width: 100%;
+			height: 100%;
+			overflow: hidden
+		}
+		#main{
+			width: 360px;
+			height: 300px;
+			position:absolute;
+			left:50%;
+			top:40%;
+			margin-left:-180px; /*向左移动180px,正好弥补left50%超过中间一半即width/2=180*/
+			margin-top:-100px;  /*向上移动100px*/
+
+			background-color: white;
+			border-radius: 3px;
+		}
+		#username,#pswd{
+			border: solid 1px black;
+			width: 317px;
+			height: 36px;
+			/*margin-bottom: 5px;*/
+			margin: 16px auto;
+
+			position: relative;
+			border-radius: 2px;
+		}
+		#login{
+			margin: 5px auto;
+			width: 317px;
+		}
+		#login input{
+			border-radius: 2px;
+			width: 317px;
+			height: 36px;
+			background-color: #1E9FFF;
+
+			border: 0px;
+			outline: none;
+		}
+
+		input[type=text],input[type=password]{
+			background-repeat: no-repeat;
+			height: 36px;
+			width: 294px;
+			position: relative;
+			left: 23px;
+			border: 0px;
+			outline: none;
+		}
+		#title{
+			/*padding-top: 20px;*/
+			/*margin-bottom: 40px;*/
+			/*margin-left: 50px;*/
+			/*font-weight: bold;*/
+			/*color: blue;*/
+			/*font-size: larger;*/
+
+			text-align:center;
+			letter-spacing:2px;
+			padding:14px 0;
+		}
+		#title h1{
+			color:#1E9FFF;font-size:25px;font-weight:bold;
+		}
+		#username img{
+			position: absolute;
+			top: 6px;
+		}
+		#pswd img{
+			position: absolute;
+			top: 6px;
+		}
+
+		#tips{
+			position: relative;
+			top: 30px;
+			text-align: center ;
+			color: #4cae4c;
+		}
+		/*#tips{*/
+		/*	border: solid 1px black;*/
+		/*	position: relative;*/
+		/*	top: 30px;*/
+		/*}*/
+		/*#tips p{*/
+		/*	border: solid 1px blue;*/
+		/*	!*margin: 0px auto;*!*/
+		/*	text-align: center;*/
+		/*	width: 180px;*/
+		/*	*/
+		/*}*/
+
+		#username:visited{
+			border: solid 1px #2C7EEA;
+		}
+		#username:link{
+			border: solid 1px black;
+		}
+		#username:hover{
+			border: solid 1px #2C7EEA;
+		}
+
+		#pswd:visited{
+			border: solid 1px #2C7EEA;
+		}
+		#pswd:link{
+			border: solid 1px black;
+		}
+		#pswd:hover{
+			border: solid 1px #2C7EEA;
+		}
+	</style>
 </head>
 <body>
-<form action="" method="POST" enctype="application/x-www-form-urlencoded">
-	<div>
-		<label>用户名：
-			<input type="text" name="username">
-		</label>
+<div id="main">
+	<div id="title">
+		<h1>gBlog登录管理系统</h1>
 	</div>
-	<div>
-		<label>密码：
-			<input type="password" name="password">
-		</label>
+	<form action="/login" method="POST">
+		<div id="username">
+			<img src="../static/images/username.png" width="22" height="25">
+			<input type="text" name="username" placeholder="用户名">
+		</div>
+		<div id="pswd">
+			<img src="../static/images/password.png" width="22" height="25">
+			<input type="password" name="password" placeholder="密码">
+		</div>
+		<div id="login">
+			<input type="submit" value="登录">
+		</div>
+	</form>
+	<div id="tips">
+		<p>{{.err}}</p>
 	</div>
-	<div>
-		<input type="submit">
-	</div>
-</form>
-<p style="color: #00ffcc">{{.err}}</p>
+</div>
 </body>
 </html>
+
+{{/*注意这种登录方式并不是前后端分离的方式*/}}

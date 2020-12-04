@@ -1,6 +1,6 @@
 [[db]]
     dbType = "mysql"
-    host = "192.168.198.134"
+    host = "127.0.0.1"
     port = 3306
     user = "root"
     password = "123456"
@@ -15,10 +15,10 @@
 
 [[db]]
     dbType = "redis"
-    host = "192.168.198.134"
+    host = "127.0.0.1"
     port = 6379
     password = ""
-    dbNum = 0
+    dbNum = 3
 
 #[[db]]
 #    dbType = "mysql2"
