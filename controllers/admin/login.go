@@ -9,12 +9,14 @@ import (
 	"net/http"
 )
 
+type LoginCrl struct{}
+
 type LoginInfo struct {
 	Username string `form:"username" binding:"required"`
 	Password string `form:"password" binding:"required"`
 }
 
-func Login(c *gin.Context) {
+func (l *LoginCrl) Login(c *gin.Context) {
 	if c.Request.Method == "POST" {
 		var info LoginInfo
 		err := c.ShouldBind(&info)
@@ -37,6 +39,8 @@ func Login(c *gin.Context) {
 				// value不能为1??
 				// maxAge最好和session保存时间一样
 				// httpOnly:true  js 脚本不能获取 cookie，可以防止跨站攻击，增加爬虫程序的难度
+				// domain: 要注意这个参数，设置什么就要在浏览器写什么
+				// 大坑：在浏览器必须输入http://localhost:8080/xxx 不能是http://127.0.0.1:8080/xxx,不然登陆返回cookie将在下次请求的时候不会携带，导致登陆不上
 				c.SetCookie("sessionId", sessionId, config.GetAPPConfig().SessionExpire, "/", "localhost", false, true)
 			} else {
 				// 到本地或者redis里面去验证sessionId

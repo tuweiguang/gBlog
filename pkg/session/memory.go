@@ -69,6 +69,10 @@ func (s *MemoryMgr) PrintSession() {
 	now := time.Now().Unix()
 	fmt.Printf("sessionMap:")
 	for id, ts := range s.sessionMap {
+		if ts-now <= 0 {
+			delete(s.sessionMap, id)
+			return
+		}
 		fmt.Printf("%v:%v ", id, ts-now)
 	}
 	fmt.Println()

@@ -34,7 +34,14 @@ main总体流程：
   平时工作比较忙+周末写了2篇blog
 
 - 2020.11.30 -- 2020.12.06
-  1. 尝试些login登录界面
-  
-  
-  2. 了解corba
+  1. 尝试写login登录界面
+  2. session设置domain与浏览器访问时要一致问题查找
+  3. session失效时，子frame出现login界面并不是整个页面跳转到login页面
+  4. session失效时，子frame出现login界面并不是整个页面跳转到login页面，再次登陆，进入子frame看到的是上次缓存login界面
+
+- 2020.12.07 -- 2020.12.13
+  1. 可能会重新考虑前端模板
+
+
+- 未来
+  1. 了解corba

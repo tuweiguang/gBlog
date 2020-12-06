@@ -64,15 +64,17 @@ func Shutdown() {
 }
 
 func authenticationRouter() {
-	adminCtl := e.Group("/admin", middleware.Validate(), middleware.PrintSession())
+	user := new(admin.UserCtl)
+	adminCtl := e.Group("/admin", middleware.Validate(e), middleware.PrintSession())
 	{
-		adminCtl.GET("/welcome", admin.Welcome)
+		adminCtl.GET("/welcome", user.Welcome)
 
 		adminCtl.GET("/user", func(context *gin.Context) {})
 		adminCtl.GET("/user/add", func(context *gin.Context) {})
-		adminCtl.GET("/user/list", admin.List)
+		adminCtl.GET("/user/list", user.List)
 
 		adminCtl.GET("/article", func(context *gin.Context) {})
+		adminCtl.GET("/article/list", func(context *gin.Context) {})
 		adminCtl.GET("/article/edit", func(context *gin.Context) {})
 		adminCtl.GET("/article/delete", func(context *gin.Context) {})
 		adminCtl.GET("/article/update", func(context *gin.Context) {})
@@ -89,8 +91,9 @@ func authenticationRouter() {
 }
 
 func noAuthenticationRouter() {
-	e.Any("/login", middleware.PrintSession(), admin.Login)
-	e.GET("/admin", middleware.Validate(), func(c *gin.Context) {
+	login := new(admin.LoginCrl)
+	e.Any("/login", middleware.PrintSession(), login.Login)
+	e.GET("/admin", middleware.Validate(e), func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 

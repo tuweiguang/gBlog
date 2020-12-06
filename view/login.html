@@ -152,24 +152,24 @@
 			top: 6px;
 		}
 
-		#tips{
-			position: relative;
-			top: 30px;
-			text-align: center ;
-			color: #4cae4c;
-		}
 		/*#tips{*/
-		/*	border: solid 1px black;*/
 		/*	position: relative;*/
 		/*	top: 30px;*/
+		/*	text-align: center ;*/
+		/*	color: #4cae4c;*/
 		/*}*/
-		/*#tips p{*/
-		/*	border: solid 1px blue;*/
-		/*	!*margin: 0px auto;*!*/
-		/*	text-align: center;*/
-		/*	width: 180px;*/
-		/*	*/
-		/*}*/
+		#tips{
+			/*border: solid 1px black;*/
+			position: relative;
+			top: 30px;
+		}
+		#tips p{
+			/*border: solid 1px blue;*/
+			margin: 0px auto;
+			text-align: center;
+			width: 180px;
+			color: #4cae4c;
+		}
 
 		#username:visited{
 			border: solid 1px #2C7EEA;
@@ -197,7 +197,7 @@
 	<div id="title">
 		<h1>gBlog登录管理系统</h1>
 	</div>
-	<form action="/login" method="POST">
+	<form action="" method="POST" enctype="application/x-www-form-urlencoded">
 		<div id="username">
 			<img src="../static/images/username.png" width="22" height="25">
 			<input type="text" name="username" placeholder="用户名">
@@ -214,7 +214,10 @@
 		<p>{{.err}}</p>
 	</div>
 </div>
+{{/*<script language="JavaScript">*/}}
+{{/*	if (window != top) */}}
+{{/*		top.location.href = location.href;*/}}
+{{/*</script>*/}}
 </body>
 </html>
-
 {{/*注意这种登录方式并不是前后端分离的方式*/}}

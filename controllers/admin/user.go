@@ -15,7 +15,9 @@ const DELETE = 3
 
 var Status = map[int]string{ONLINE: "在线", UNSALE: "下架", DELETE: "删除"}
 
-func List(c *gin.Context) {
+type UserCtl struct{}
+
+func (u *UserCtl) List(c *gin.Context) {
 	page := c.GetInt("page")
 	if page < 1 {
 		page = 1
@@ -30,12 +32,12 @@ func List(c *gin.Context) {
 		"Status":     status,
 		"Name":       name,
 		"Data":       some,
-		"Paginator":  GenPaginator(page, LIMIT, len(some)),
+		"Paginator":  genPaginator(page, LIMIT, len(some)),
 		"StatusText": Status,
 	})
 }
 
-func Welcome(c *gin.Context) {
+func (u *UserCtl) Welcome(c *gin.Context) {
 	df, _ := sys.Df()
 	c.HTML(http.StatusOK, "welcome.html", gin.H{
 		"Df": df,
@@ -49,7 +51,7 @@ type Paginator struct {
 	TotalCount  int `json:"totalCount"`  //总数量
 }
 
-func GenPaginator(page, limit, count int) Paginator {
+func genPaginator(page, limit, count int) Paginator {
 	var paginator Paginator
 	paginator.TotalCount = count
 	paginator.TotalPage = int(math.Ceil(float64(count) / float64(limit)))

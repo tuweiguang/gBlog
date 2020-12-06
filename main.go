@@ -7,6 +7,8 @@ import (
 	"gBlog/commom/db"
 	"gBlog/commom/log"
 	"gBlog/controllers"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
 	"syscall"
@@ -21,6 +23,9 @@ func main() {
 	log.Init()
 	db.Init()
 
+	go func() {
+		_ = http.ListenAndServe("localhost:6060", nil)
+	}()
 	controllers.DefaultServerRun()
 
 	c := make(chan os.Signal, 1)
