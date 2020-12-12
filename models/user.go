@@ -45,3 +45,30 @@ func GetSomeUser(offset, limit int) []*User {
 	}
 	return some
 }
+
+func IsUserExists(username string) bool {
+	if username == "" {
+		return false
+	}
+
+	user := new(User)
+
+	rows := db.GetMySQL().First(user, "name=?", username).RowsAffected
+	if rows != 0 {
+		return true
+	}
+
+	return false
+}
+
+func SaveToDB(user *User) bool {
+	if user == nil {
+		return false
+	}
+
+	err := db.GetMySQL().Save(user).Error
+	if err != nil {
+		return false
+	}
+	return true
+}

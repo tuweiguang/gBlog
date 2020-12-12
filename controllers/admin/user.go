@@ -4,8 +4,8 @@ import (
 	"gBlog/commom/sys"
 	"gBlog/models"
 	"github.com/gin-gonic/gin"
-	"math"
 	"net/http"
+	"time"
 )
 
 const LIMIT = 10 //一页10条记录
@@ -32,7 +32,7 @@ func (u *UserCtl) List(c *gin.Context) {
 		"Status":     status,
 		"Name":       name,
 		"Data":       some,
-		"Paginator":  genPaginator(page, LIMIT, len(some)),
+		"Paginator":  models.GenPaginator(page, LIMIT, len(some)),
 		"StatusText": Status,
 	})
 }
@@ -44,18 +44,56 @@ func (u *UserCtl) Welcome(c *gin.Context) {
 	})
 }
 
-type Paginator struct {
-	CurrentPage int `json:"currentPage"` //当前页
-	PageSize    int `json:"pageSize"`    //每页数量
-	TotalPage   int `json:"totalPage"`   //总页数
-	TotalCount  int `json:"totalCount"`  //总数量
+func (u *UserCtl) Add(c *gin.Context) {
+	c.HTML(http.StatusOK, "user-add.html", nil)
 }
 
-func genPaginator(page, limit, count int) Paginator {
-	var paginator Paginator
-	paginator.TotalCount = count
-	paginator.TotalPage = int(math.Ceil(float64(count) / float64(limit)))
-	paginator.PageSize = limit
-	paginator.CurrentPage = page
-	return paginator
+func (u *UserCtl) Register(c *gin.Context) {
+	if c.Request.Method == "POST" {
+		var info RegisterInfo
+		err := c.ShouldBind(&info)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"msg": "填写参数错误",
+			})
+			return
+		}
+
+		// password == repassword
+		if info.Password != info.RePassword {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"msg": "输入密码不正确",
+			})
+			return
+		}
+
+		//需要到数据库中找这个username是否存在
+		if models.IsUserExists(info.Username) {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"msg": "账户已存在",
+			})
+			return
+		}
+
+		//不存在则保存到数据库
+		user := &models.User{
+			Name:     info.Username,
+			Password: info.Password,
+			Email:    info.Email,
+			Created:  time.Now(),
+			Status:   0,
+		}
+
+		if models.SaveToDB(user) {
+			c.JSON(http.StatusOK, gin.H{
+				"msg": "",
+			})
+			return
+		}
+
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg": "创建用户失败",
+		})
+		return
+	}
 }

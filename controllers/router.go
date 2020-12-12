@@ -70,8 +70,9 @@ func authenticationRouter() {
 		adminCtl.GET("/welcome", user.Welcome)
 
 		adminCtl.GET("/user", func(context *gin.Context) {})
-		adminCtl.GET("/user/add", func(context *gin.Context) {})
+		adminCtl.GET("/user/add", user.Add)
 		adminCtl.GET("/user/list", user.List)
+		adminCtl.POST("/user/register", user.Register)
 
 		adminCtl.GET("/article", func(context *gin.Context) {})
 		adminCtl.GET("/article/list", func(context *gin.Context) {})

@@ -11,11 +11,6 @@ import (
 
 type LoginCrl struct{}
 
-type LoginInfo struct {
-	Username string `form:"username" binding:"required"`
-	Password string `form:"password" binding:"required"`
-}
-
 func (l *LoginCrl) Login(c *gin.Context) {
 	if c.Request.Method == "POST" {
 		var info LoginInfo
