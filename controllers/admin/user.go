@@ -27,7 +27,6 @@ func (u *UserCtl) List(c *gin.Context) {
 	status := c.GetInt("status")
 
 	some := models.GetSomeUser((page-1)*LIMIT, LIMIT)
-
 	c.HTML(http.StatusOK, "user-list.html", gin.H{
 		"Status":     status,
 		"Name":       name,
@@ -53,7 +52,7 @@ func (u *UserCtl) Register(c *gin.Context) {
 		var info RegisterInfo
 		err := c.ShouldBind(&info)
 		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"msg": "填写参数错误",
 			})
 			return
@@ -61,7 +60,7 @@ func (u *UserCtl) Register(c *gin.Context) {
 
 		// password == repassword
 		if info.Password != info.RePassword {
-			c.JSON(http.StatusBadRequest, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"msg": "输入密码不正确",
 			})
 			return
@@ -69,7 +68,7 @@ func (u *UserCtl) Register(c *gin.Context) {
 
 		//需要到数据库中找这个username是否存在
 		if models.IsUserExists(info.Username) {
-			c.JSON(http.StatusBadRequest, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"msg": "账户已存在",
 			})
 			return
@@ -86,12 +85,12 @@ func (u *UserCtl) Register(c *gin.Context) {
 
 		if models.SaveToDB(user) {
 			c.JSON(http.StatusOK, gin.H{
-				"msg": "",
+				"msg": "创建用户成功",
 			})
 			return
 		}
 
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"msg": "创建用户失败",
 		})
 		return

@@ -3,6 +3,7 @@ package admin
 import (
 	"fmt"
 	"gBlog/commom/config"
+	"gBlog/commom/log"
 	"gBlog/models"
 	"gBlog/pkg/session"
 	"github.com/gin-gonic/gin"
@@ -38,18 +39,17 @@ func (l *LoginCrl) Login(c *gin.Context) {
 				// 大坑：在浏览器必须输入http://localhost:8080/xxx 不能是http://127.0.0.1:8080/xxx,不然登陆返回cookie将在下次请求的时候不会携带，导致登陆不上
 				c.SetCookie("sessionId", sessionId, config.GetAPPConfig().SessionExpire, "/", "localhost", false, true)
 			} else {
-				// 到本地或者redis里面去验证sessionId
-				if status := session.NewMemoryMgr().CheckSession(sessionId); status > session.SessionExist {
-					if status == session.SessionExpire {
-						// 删除session
-						session.NewMemoryMgr().DelSession(sessionId)
-					}
-
-					// sessionId不存在或者过期，需要重新登陆
-					c.HTML(http.StatusOK, "login.html", gin.H{
-						"err": "账号登陆过期，请重新登陆!",
-					})
+				log.GetLog().Info(fmt.Sprintf("old session:%v", sessionId))
+				// 每次重新登陆将给一个新的session，删除旧的
+				status := session.NewMemoryMgr().CheckSession(sessionId)
+				if status == session.SessionExpire || status == session.SessionExist {
+					// 删除session
+					session.NewMemoryMgr().DelSession(sessionId)
 				}
+
+				sessionId = session.NewMemoryMgr().CreateSessoin()
+				c.SetCookie("sessionId", sessionId, config.GetAPPConfig().SessionExpire, "/", "localhost", false, true)
+				log.GetLog().Info(fmt.Sprintf("new session:%v", sessionId))
 			}
 
 			// 重定向

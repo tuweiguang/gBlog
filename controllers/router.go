@@ -65,6 +65,7 @@ func Shutdown() {
 
 func authenticationRouter() {
 	user := new(admin.UserCtl)
+	article := new(admin.ArticleCtl)
 	adminCtl := e.Group("/admin", middleware.Validate(e), middleware.PrintSession())
 	{
 		adminCtl.GET("/welcome", user.Welcome)
@@ -75,7 +76,7 @@ func authenticationRouter() {
 		adminCtl.POST("/user/register", user.Register)
 
 		adminCtl.GET("/article", func(context *gin.Context) {})
-		adminCtl.GET("/article/list", func(context *gin.Context) {})
+		adminCtl.GET("/article/list", article.List)
 		adminCtl.GET("/article/edit", func(context *gin.Context) {})
 		adminCtl.GET("/article/delete", func(context *gin.Context) {})
 		adminCtl.GET("/article/update", func(context *gin.Context) {})

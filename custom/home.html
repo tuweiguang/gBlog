@@ -1,0 +1,211 @@
+{{/*<!DOCTYPE html>*/}}
+{{/*<html lang="en">*/}}
+{{/*<head>*/}}
+{{/*    <meta charset="utf-8">*/}}
+{{/*    <meta http-equiv="X-UA-Compatible" content="IE=edge">*/}}
+{{/*    <meta name="viewport" content="width=device-width, initial-scale=1">*/}}
+{{/*    <meta name="description" content="">*/}}
+{{/*    <meta name="author" content="">*/}}
+{{/*    <link rel="icon" href="https://v3.bootcss.com/favicon.ico">*/}}
+
+{{/*    <title>gBlog - 后台管理首页</title>*/}}
+
+{{/*    <link href="https://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.css" rel="stylesheet">*/}}
+
+{{/*    <link href="https://v3.bootcss.com/examples/dashboard/dashboard.css" rel="stylesheet">*/}}
+{{/*    */}}
+{{/*    <script src="https://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script>*/}}
+
+{{/*    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>*/}}
+{{/*    <script src="https://v3.bootcss.com/dist/js/bootstrap.min.js"></script>*/}}
+{{/*    <script src="https://v3.bootcss.com/assets/js/docs.min.js"></script>*/}}
+{{/*    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->*/}}
+{{/*    <script src="https://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>*/}}
+
+{{/*    <link rel="stylesheet" href="/static/css/font.css">*/}}
+{{/*    <link rel="stylesheet" href="/static/css/xadmin.css">*/}}
+{{/*    <script src="/static/lib/layui/layui.js" charset="utf-8"></script>*/}}
+{{/*    <script type="text/javascript" src="/static/js/xadmin.js"></script>*/}}
+{{/*</head>*/}}
+{{/*<body>*/}}
+
+{{/*<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">*/}}
+{{/*    <div class="container-fluid">*/}}
+{{/*        <div class="navbar-header">*/}}
+{{/*            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">*/}}
+{{/*                <span class="sr-only">Toggle navigation</span>*/}}
+{{/*                <span class="icon-bar"></span>*/}}
+{{/*                <span class="icon-bar"></span>*/}}
+{{/*                <span class="icon-bar"></span>*/}}
+{{/*            </button>*/}}
+{{/*            <a class="navbar-brand" href="#">Admin</a>*/}}
+{{/*        </div>*/}}
+{{/*        <div id="navbar" class="navbar-collapse collapse">*/}}
+{{/*            <ul class="nav navbar-nav navbar-right">*/}}
+{{/*                <li><a href="/admin/user/logout">Logout</a></li>*/}}
+{{/*            </ul>*/}}
+{{/*        </div>*/}}
+{{/*    </div>*/}}
+{{/*</nav>*/}}
+
+{{/*<div class="container-fluid">*/}}
+{{/*    <div class="row">*/}}
+{{/*        <div class="col-sm-3 col-md-2 sidebar" style="padding-top: 10px;">*/}}
+{{/*            <ul id="main-nav" class="main-nav nav nav-tabs nav-stacked" style="">*/}}
+{{/*                <li class="active">*/}}
+{{/*                    <a href="#configSetting" class="nav-header collapsed" data-toggle="collapse" aria-expanded=true>*/}}
+{{/*                        <i class="glyphicon glyphicon-th-large"></i>*/}}
+{{/*                        用户管理*/}}
+{{/*                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>*/}}
+{{/*                    </a>*/}}
+{{/*                    <ul id="configSetting" class="nav nav-list secondmenu collapse" aria-expanded=true>*/}}
+{{/*                        <li>*/}}
+{{/*                            <a href="/admin/user/list">*/}}
+{{/*                                <i class="glyphicon glyphicon-user"></i>&nbsp*/}}
+{{/*                                站点用户*/}}
+{{/*                            </a>*/}}
+{{/*                        </li>*/}}
+{{/*                    </ul>*/}}
+{{/*                </li>*/}}
+{{/*                <li class="active">*/}}
+{{/*                    <a href="#gmSystem" class="nav-header collapsed" data-toggle="collapse" aria-expanded=true>*/}}
+{{/*                        <i class="glyphicon glyphicon-cog"></i>*/}}
+{{/*                        文章管理*/}}
+{{/*                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>*/}}
+{{/*                    </a>*/}}
+{{/*                    <ul id="gmSystem" class="nav nav-list secondmenu collapse" aria-expanded=true>*/}}
+{{/*                        <li>*/}}
+{{/*                            <a href="/back/admin/gm/manager">*/}}
+{{/*                                <i class="glyphicon glyphicon-search"></i>*/}}
+{{/*                                文章抓取*/}}
+{{/*                            </a>*/}}
+{{/*                        </li>*/}}
+{{/*                        <li>*/}}
+{{/*                            <a href="/back/admin/gm/delete-user">*/}}
+{{/*                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp*/}}
+{{/*                                文章列表*/}}
+{{/*                            </a>*/}}
+{{/*                        </li>*/}}
+{{/*                        <li>*/}}
+{{/*                            <a href="/back/admin/gm/set-vip">*/}}
+{{/*                                <i class="glyphicon glyphicon-pencil"></i>&nbsp*/}}
+{{/*                                评论列表*/}}
+{{/*                            </a>*/}}
+{{/*                        </li>*/}}
+{{/*                    </ul>*/}}
+
+{{/*                </li>*/}}
+{{/*                <li class="active">*/}}
+{{/*                    <a href="#groupSetting" class="nav-header collapsed" data-toggle="collapse" aria-expanded=true>*/}}
+{{/*                        <i class="glyphicon glyphicon-th-list"></i>*/}}
+{{/*                        类别管理*/}}
+{{/*                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>*/}}
+{{/*                    </a>*/}}
+{{/*                    <ul id="groupSetting" class="nav nav-list secondmenu collapse" aria-expanded=true>*/}}
+{{/*                        <li>*/}}
+{{/*                            <a href="/back/admin/group/list">*/}}
+{{/*                                <i class="glyphicon glyphicon-tags"></i>&nbsp*/}}
+{{/*                                多级分类*/}}
+{{/*                            </a>*/}}
+{{/*                        </li>*/}}
+{{/*                    </ul>*/}}
+{{/*                </li>*/}}
+{{/*            </ul>*/}}
+{{/*        </div>*/}}
+{{/*        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">*/}}
+{{/*		    <p>这是内容区域</p>*/}}
+{{/*        </div>*/}}
+{{/*    </div>*/}}
+{{/*</div>*/}}
+
+{{/*</body>*/}}
+{{/*</html>*/}}
+
+
+{{ define "home" }}
+{{/*    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">*/}}
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Admin</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/admin/user/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+{{/*    </nav>*/}}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar" style="padding-top: 10px;">
+                <ul id="main-nav" class="main-nav nav nav-tabs nav-stacked" style="">
+                    <li class="active">
+                        <a href="#configSetting" class="nav-header collapsed" data-toggle="collapse" aria-expanded=true>
+                            <i class="glyphicon glyphicon-th-large"></i>
+                            用户管理
+                            <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+                        </a>
+                        <ul id="configSetting" class="nav nav-list secondmenu collapse" aria-expanded=true>
+                            <li>
+                                <a href="/admin/user/list">
+                                    <i class="glyphicon glyphicon-user"></i>&nbsp
+                                    站点用户
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="active">
+                        <a href="#gmSystem" class="nav-header collapsed" data-toggle="collapse" aria-expanded=true>
+                            <i class="glyphicon glyphicon-cog"></i>
+                            文章管理
+                            <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+                        </a>
+                        <ul id="gmSystem" class="nav nav-list secondmenu collapse" aria-expanded=true>
+                            <li>
+                                <a href="/back/admin/gm/manager">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                    文章抓取
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/back/admin/gm/delete-user">
+                                    <i class="glyphicon glyphicon-list-alt"></i>&nbsp
+                                    文章列表
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/back/admin/gm/set-vip">
+                                    <i class="glyphicon glyphicon-pencil"></i>&nbsp
+                                    评论列表
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="active">
+                        <a href="#groupSetting" class="nav-header collapsed" data-toggle="collapse" aria-expanded=true>
+                            <i class="glyphicon glyphicon-th-list"></i>
+                            类别管理
+                            <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+                        </a>
+                        <ul id="groupSetting" class="nav nav-list secondmenu collapse" aria-expanded=true>
+                            <li>
+                                <a href="/back/admin/group/list">
+                                    <i class="glyphicon glyphicon-tags"></i>&nbsp
+                                    多级分类
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{{ end }}
