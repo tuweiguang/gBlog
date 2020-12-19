@@ -75,6 +75,9 @@
                             url:'/admin/user/register',
                             type:'post',
                             data:$("form").serialize(),
+                            // beforeSend: function () {
+                            //     alert($("form").serialize());
+                            // },
                             success:function (data) {
                                 console.log(data);
                                 if (data.code == 200){
