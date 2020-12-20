@@ -16,12 +16,8 @@ type User struct {
 	Status   int       `gorm:"column:status"`
 }
 
-func getTableName() string {
-	return "user"
-}
-
 func (User) TableName() string {
-	return getTableName()
+	return "user"
 }
 
 func GetUser(username string) *User {
@@ -41,7 +37,20 @@ func GetSomeUser(offset, limit int) []*User {
 	//db.GetMySQL().Table(getTableName()).Joins(" INNER JOIN  user ON user.id = read_states.target_id ").Where("ats.tenant_id = ? and ats.object_id = ? and ats.object_type = ? AND read_states.status = 'unread'", tenantId, uid, common.EMPLOYEE)
 	err := db.GetMySQL().Raw("SELECT * FROM user as b1 inner join (select id from user limit ?,?) as b2 on b1.id = b2.id", offset, limit).Scan(&some).Error
 	if err != nil {
-		log.GetLog().Error(fmt.Sprint("GetSomeUser offset:%v limit:%v error:%v", offset, limit, err))
+		log.GetLog().Error(fmt.Sprintf("GetSomeUser offset:%v limit:%v error:%v", offset, limit, err))
+	}
+	return some
+}
+
+func GetSomeUserByIds(ids []int64) []*User {
+	if ids == nil {
+		return nil
+	}
+
+	var some []*User
+	err := db.GetMySQL().Where("id in (?)", ids).Find(&some).Error
+	if err != nil {
+		log.GetLog().Error(fmt.Sprintf("GetSomeUserByIds error:%v", err))
 	}
 	return some
 }

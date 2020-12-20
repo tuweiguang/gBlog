@@ -30,7 +30,7 @@
                 <div class="layui-col-md12">
                     <div class="layui-card">
                         <div class="layui-card-body ">
-                            <form class="layui-form layui-col-space5" id="form" action="/admin/ArticleController/List" method="get">
+                            <form class="layui-form layui-col-space5" id="form" action="/admin/article/list" method="get">
                                 <div class="layui-input-inline layui-show-xs-block">
                                     <input class="layui-input" placeholder="开始日" value="{{if .Start}}{{.Start}}{{end}}" name="start" id="start"></div>
                                 <div class="layui-input-inline layui-show-xs-block">
@@ -47,13 +47,12 @@
                                     <input value="{{if .Title}}{{.Title}}{{end}}" type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input"></div>
                                 <div class="layui-input-inline layui-show-xs-block">
                                     <button type="reset" class="layui-btn" onclick="reset_form()"><i class="layui-icon layui-icon-refresh"></i></button>
-                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
-                                        <i class="layui-icon">&#xe615;</i></button>
+                                    <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
                                 </div>
                             </form>
                         </div>
                         <div class="layui-card-header">
-                            <button class="layui-btn" onclick="xadmin.open('添加文章','/admin/ArticleController/Add','','',true)">
+                            <button class="layui-btn" onclick="xadmin.open('添加文章','/admin/article/add','','',true)">
                                 <i class="layui-icon"></i>添加</button></div>
                         <div class="layui-card-body ">
                             <table class="layui-table layui-form">
@@ -82,17 +81,15 @@
                                         <td>{{index $.StatusText $value.Status}}</td>
                                         <td>{{$value.Pv}}</td>
                                         <th>{{$value.Like}}</th>
-                                        <td>{{$value.User.Name}}</td>
+                                        <td>{{$value.User.Name}}}</td>
                                         <td>
                                             <input type="checkbox" id="{{$value.Id}}" {{if eq $value.Recommend 1}}checked{{end}} name="recommend" lay-skin="switch" lay-filter="recommend" lay-text="{{index $.RecommendText $value.Recommend}}|{{index $.RecommendText $value.Recommend}}">
                                             {{/*{{index $.RecommendText $value.Recommend}}*/}}
                                         </td>
 
                                         <td class="td-manage">
-                                            <a title="查看" onclick="xadmin.open('编辑','/admin/ArticleController/Put?id={{$value.Id}}','','',true)" href="javascript:;">
-                                                <i class="layui-icon">&#xe63c;</i></a>
-                                            <a title="删除" onclick="member_del(this,'{{$value.Id}}')" href="javascript:;">
-                                                <i class="layui-icon">&#xe640;</i></a>
+                                            <a title="查看" onclick="xadmin.open('编辑','/admin/article/Put?id={{$value.Id}}','','',true)" href="javascript:;"><i class="layui-icon">&#xe63c;</i></a>
+                                            <a title="删除" onclick="member_del(this,'{{$value.Id}}')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>
                                         </td>
                                     </tr>
                                 {{end}}
@@ -104,10 +101,10 @@
                                 <div>
                                     <span class="current">{{.Paginator.CurrentPage}}</span>
                                     {{if gt .Paginator.CurrentPage 1}}
-                                        <a class="prev" href="/admin/ArticleController/List?page={{IndexDecrOne $.Paginator.CurrentPage}}&start={{if .Start}}{{.Start}}{{end}}&end={{if .End}}{{.End}}{{end}}&status={{if .Status}}{{.Status}}{{end}}&title={{if .Title}}{{.Title}}{{end}}">上一页</a>
+                                        <a class="prev" href="/admin/article/List?page={{IndexDecrOne $.Paginator.CurrentPage}}&start={{if .Start}}{{.Start}}{{end}}&end={{if .End}}{{.End}}{{end}}&status={{if .Status}}{{.Status}}{{end}}&title={{if .Title}}{{.Title}}{{end}}">上一页</a>
                                     {{end}}
                                     {{if lt .Paginator.CurrentPage .Paginator.TotalPage}}
-                                        <a class="next" href="/admin/ArticleController/List?page={{IndexAddOne $.Paginator.CurrentPage}}&start={{if .Start}}{{.Start}}{{end}}&end={{if .End}}{{.End}}{{end}}&status={{if .Status}}{{.Status}}{{end}}&title={{if .Title}}{{.Title}}{{end}}">下一页</a>
+                                        <a class="next" href="/admin/article/List?page={{IndexAddOne $.Paginator.CurrentPage}}&start={{if .Start}}{{.Start}}{{end}}&end={{if .End}}{{.End}}{{end}}&status={{if .Status}}{{.Status}}{{end}}&title={{if .Title}}{{.Title}}{{end}}">下一页</a>
                                     {{end}}
                                     <span class="num">总 {{.Paginator.TotalPage}} 页</span>
                                 </div>
@@ -177,6 +174,13 @@
             });
         }
 
+        function reset_form() {
+            $("#form").find('input,select,input[type=hidden]').each(function() {
+                console.log($(this).val());
+                console.log($(this));
+                $(this).val('123');
+            });
+        }
     </script>
 
 </html>

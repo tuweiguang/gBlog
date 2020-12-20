@@ -4,14 +4,15 @@ use gBlog;
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(255) DEFAULT NULL COMMENT '用户名',
-  `password` varchar(255) DEFAULT NULL COMMENT '密码',
-  `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
+  `name` varchar(255) DEFAULT '' COMMENT '用户名',
+  `password` varchar(255) DEFAULT '' COMMENT '密码',
+  `email` varchar(255) DEFAULT '' COMMENT '邮箱',
   `created` datetime DEFAULT NULL COMMENT '创建时间',
   `status` int DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT '用户基本表';
 
+DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `user_id` int DEFAULT '0' COMMENT '用户ID',
@@ -28,5 +29,15 @@ CREATE TABLE `article` (
   `review` int DEFAULT '0' COMMENT '评论',
   `recommend` int NOT NULL DEFAULT '0' COMMENT '是否顶置，0否；1是，默认否',
   `like` int NOT NULL DEFAULT '0' COMMENT '点赞数量',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) DEFAULT '',
+  `pid` int DEFAULT '0' COMMENT '父ID',
+  `sort` int DEFAULT '0' COMMENT '排序',
+  `status` int DEFAULT '1' COMMENT '状态1正常，2删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

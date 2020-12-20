@@ -5,10 +5,10 @@ import (
 	"gBlog/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"time"
 )
 
-const LIMIT = 10 //一页10条记录
 const ONLINE = 1
 const UNSALE = 2
 const DELETE = 3
@@ -18,13 +18,10 @@ var Status = map[int]string{ONLINE: "在线", UNSALE: "下架", DELETE: "删除"
 type UserCtl struct{}
 
 func (u *UserCtl) List(c *gin.Context) {
-	page := c.GetInt("page")
-	if page < 1 {
-		page = 1
-	}
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 
 	name := c.Query("name")
-	status := c.GetInt("status")
+	status, _ := strconv.Atoi(c.Query("status"))
 
 	some := models.GetSomeUser((page-1)*LIMIT, LIMIT)
 	c.HTML(http.StatusOK, "user-list.html", gin.H{

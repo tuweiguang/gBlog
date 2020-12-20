@@ -79,8 +79,8 @@ func authenticationRouter() {
 		adminCtl.GET("/article/list", article.List)
 		adminCtl.GET("/article/edit", func(context *gin.Context) {})
 		adminCtl.GET("/article/delete", func(context *gin.Context) {})
-		adminCtl.GET("/article/update", func(context *gin.Context) {})
-		adminCtl.GET("/article/add", func(context *gin.Context) {})
+		adminCtl.POST("/article/upload", article.Upload)
+		adminCtl.GET("/article/add", article.Add)
 		adminCtl.GET("/article/top", func(context *gin.Context) {})
 		adminCtl.GET("/article/get", func(context *gin.Context) {})
 
