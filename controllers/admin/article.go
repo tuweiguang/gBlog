@@ -77,9 +77,13 @@ func (a *ArticleCtl) Add(c *gin.Context) {
 }
 
 func (a *ArticleCtl) Upload(c *gin.Context) {
-	fmt.Println("=================> Upload")
 	if c.Request.Method == "POST" {
 		//var info UploadArticle
+
+		title := c.PostForm("title")
+		cate := c.PostForm("cate")
+		tag := c.PostForm("tag")
+		log.Printf("=========> title:%v,cate:%v,tag:%v", title, cate, tag)
 
 		// 单个文件
 		file, err := c.FormFile("file")
@@ -98,7 +102,8 @@ func (a *ArticleCtl) Upload(c *gin.Context) {
 			fmt.Println("======================>", err)
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"message": fmt.Sprintf("'%s' uploaded!", file.Filename),
+			"status":  "ok",
+			"message": fmt.Sprintf("%s uploaded!", file.Filename),
 		})
 	}
 }
