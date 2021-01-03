@@ -39,3 +39,13 @@ func GetAllCategory() []*Category {
 	}
 	return all
 }
+
+func AddCategory(cate *Category) error {
+	err := db.GetMySQL().Create(cate)
+	if err != nil {
+		log.GetLog().Error(fmt.Sprintf("AddCategory error:%v", err))
+		return err.Error
+	}
+
+	return nil
+}

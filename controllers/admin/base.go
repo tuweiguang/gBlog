@@ -19,7 +19,14 @@ type RegisterInfo struct {
 // 上传文章
 type UploadArticle struct {
 	Title string `form:"title" binding:"required"`
-	Cate  uint   `form:"cate" binding:"required"`
+	Cate  int    `form:"cate" binding:"required"`
 	Tag   string `form:"tag" binding:"required"`
 	//File  string `form:"file" binding:"required"`
+}
+
+// 添加类别
+type AddCate struct {
+	CateId   int    `form:"pid"`
+	CateName string `form:"name" binding:"required"`
+	Sort     int    `form:"sort" binding:"required"`
 }

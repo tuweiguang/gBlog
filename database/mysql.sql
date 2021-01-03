@@ -19,18 +19,17 @@ CREATE TABLE `article` (
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `category_id` int NOT NULL COMMENT '分类ID',
   `tag` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tag',
-  `remark` varchar(500) NOT NULL DEFAULT '' COMMENT '摘要',
-  `desc` longtext NOT NULL COMMENT '详情',
-  `html` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'html',
-  `pv` int DEFAULT '0' COMMENT 'px',
-  `created` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated` datetime DEFAULT NULL COMMENT '更新时间',
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
+  `pv` int DEFAULT '0' COMMENT 'pv',
   `status` int DEFAULT '1' COMMENT '1可用，2禁用，3删除',
   `review` int DEFAULT '0' COMMENT '评论',
   `recommend` int NOT NULL DEFAULT '0' COMMENT '是否顶置，0否；1是，默认否',
   `like` int NOT NULL DEFAULT '0' COMMENT '点赞数量',
+  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (

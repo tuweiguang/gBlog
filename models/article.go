@@ -9,21 +9,20 @@ import (
 )
 
 type Article struct {
-	Id         int       `gorm:"primary_key;column:id"`
-	UserId     int64     `gorm:"colun:user_id"`
-	Title      string    `gorm:"column:title"`
-	CategoryId int       `gorm:"column:category_id"`
-	Tag        string    `gorm:"column:tag"`
-	Remark     string    `gorm:"column:remark"`
-	Desc       string    `gorm:"column:desc"`
-	Html       string    `gorm:"column:html"`
-	Created    time.Time `gorm:"column:created"`
-	Updated    time.Time `gorm:"column:updated"`
-	Status     int       `gorm:"column:status"`
-	Pv         int       `gorm:"column:pv"`
-	Review     int       `gorm:"column:review"`
-	Recommend  int       `gorm:"column:recommend"`
-	Like       int       `gorm:"column:like"`
+	Id         uint `gorm:"primary_key;column:id"`
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+	DeletedAt  *time.Time `sql:"index"`
+	UserId     int64      `gorm:"column:user_id"`
+	Title      string     `gorm:"column:title"`
+	CategoryId int        `gorm:"column:category_id"`
+	Tag        string     `gorm:"column:tag"`
+	Content    string     `gorm:"column:content"`
+	Status     int        `gorm:"column:status"`
+	Pv         int        `gorm:"column:pv"`
+	Review     int        `gorm:"column:review"`
+	Recommend  int        `gorm:"column:recommend"`
+	Like       int        `gorm:"column:like"`
 	User       *User
 	Category   *Category
 }
@@ -55,4 +54,19 @@ func GetSomeArticle(offset, limit int) []*Article {
 		log.GetLog().Error(fmt.Sprintf("GetSomeArtcle offset:%v limit:%v error:%v", offset, limit, err))
 	}
 	return some
+}
+
+func CreateArticle(userId int64, title string, categoryId int, tag string, content string) {
+	article := Article{
+		UserId:     userId,
+		Title:      title,
+		CategoryId: categoryId,
+		Tag:        tag,
+		Content:    content,
+	}
+
+	result := db.GetMySQL().Create(&article)
+	if result.Error != nil {
+		log.GetLog().Error(fmt.Sprintf("CreateArticle error:%v", result.Error))
+	}
 }

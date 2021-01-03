@@ -5,7 +5,6 @@ import (
 	"gBlog/models"
 	"gBlog/utils"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -68,7 +67,6 @@ func (a *ArticleCtl) List(c *gin.Context) {
 }
 
 func (a *ArticleCtl) Add(c *gin.Context) {
-	fmt.Println("=================> ADD")
 	cate := models.GetAllCategory()
 
 	res := gin.H{}
@@ -78,32 +76,48 @@ func (a *ArticleCtl) Add(c *gin.Context) {
 
 func (a *ArticleCtl) Upload(c *gin.Context) {
 	if c.Request.Method == "POST" {
-		//var info UploadArticle
+		var info UploadArticle
 
-		title := c.PostForm("title")
-		cate := c.PostForm("cate")
-		tag := c.PostForm("tag")
-		log.Printf("=========> title:%v,cate:%v,tag:%v", title, cate, tag)
-
-		// 单个文件
-		file, err := c.FormFile("file")
+		err := c.ShouldBind(&info)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": err.Error(),
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "error",
+				"message": "参数错误!",
 			})
 			return
 		}
 
-		log.Println(file.Filename)
-		dst := fmt.Sprintf("./%s", file.Filename)
-		// 上传文件到指定的目录
-		err = c.SaveUploadedFile(file, dst)
+		// 单个文件
+		file, err := c.FormFile("file")
 		if err != nil {
-			fmt.Println("======================>", err)
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "error",
+				"message": "获取文件失败！",
+			})
+			return
 		}
+
+		//dst := fmt.Sprintf("./%s", file.Filename)
+		// 上传文件到指定的目录
+		//err = c.SaveUploadedFile(file, dst)
+		//if err != nil {
+		//	c.JSON(http.StatusOK, gin.H{
+		//		"status":  "error",
+		//		"message": "上传文件失败！",
+		//	})
+		//	return
+		//}
+		content, err := utils.ReadUploaded(file)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "error",
+				"message": "读取文件失败",
+			})
+		}
+		models.CreateArticle(1, info.Title, info.Cate, info.Tag, string(content))
 		c.JSON(http.StatusOK, gin.H{
 			"status":  "ok",
-			"message": fmt.Sprintf("%s uploaded!", file.Filename),
+			"message": "添加文章成功！",
 		})
 	}
 }

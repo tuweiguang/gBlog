@@ -75,13 +75,13 @@
                                     <tr>
                                         <td>{{IndexForOne $key $.Paginator.CurrentPage $.Paginator.PageSize}}</td>
                                         <td><a  href="/detail/{{$value.Id}}.html" target="_blank">{{$value.Title}}</a></td>
-                                        <td>{{$value.Category.Name}}</td>
-                                        <td>{{$value.Created}}</td>
-                                        <td>{{$value.Updated}}</td>
+                                        <td>{{if $value.Category}}{{$value.Category.Name}}{{end}}</td>
+                                        <td>{{$value.CreatedAt}}</td>
+                                        <td>{{$value.UpdatedAt}}</td>
                                         <td>{{index $.StatusText $value.Status}}</td>
                                         <td>{{$value.Pv}}</td>
                                         <th>{{$value.Like}}</th>
-                                        <td>{{$value.User.Name}}}</td>
+                                        <td>{{if $value.User}}{{$value.User.Name}}{{end}}</td>
                                         <td>
                                             <input type="checkbox" id="{{$value.Id}}" {{if eq $value.Recommend 1}}checked{{end}} name="recommend" lay-skin="switch" lay-filter="recommend" lay-text="{{index $.RecommendText $value.Recommend}}|{{index $.RecommendText $value.Recommend}}">
                                             {{/*{{index $.RecommendText $value.Recommend}}*/}}
