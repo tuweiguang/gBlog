@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin" />
+
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>{{$.index}} 第 {{.Paginator.CurrentPage}} 页 - gBlog</title>
+    <meta name="description" content="{{$.keyword}}"/>
+    <meta name="keywords" content="{{$.description}}">
+    <link rel="stylesheet" href="/static/css/blog-common.min.css" />
+    <link id="MainCss" rel="stylesheet" href="/static/css/bundle-codinglife.min.css" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/static/css/bundle-codinglife-mobile.min.css" />
+    <link rel="stylesheet" href="/static/css/{{$.bgClass}}.css" />
+</head>
+<style>
+    .day{
+        margin-bottom: 20px;
+    }
+</style>
+
+<body>
+<a name="top"></a>
+<!--done-->
+<div id="home">
+    {{template "front-header.html" .}}
+    <div id="main">
+        <div id="mainContent">
+            <div class="forFlow">
+
+                <!--done-->
+                {{range $key ,$value := $.Data}}
+                    <div class="day">
+                        <div class="postTitle">
+                            <a class="postTitle2" title="{{$value.Title}}" href="/detail/{{$value.Id}}.html">
+                                {{$value.Title}}
+                            </a>
+                        </div>
+                        <div class="postCon">
+                            <div class="c_b_p_desc">
+                                <div style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
+                                    摘要：{{$value.Content}}</div>
+                                <a title="{{$value.Title}}" href="/detail/{{$value.Id}}.html" class="c_b_p_desc_readmore">阅读全文</a>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="postDesc">
+                            {{dateformat $value.CreatedAt "2006-01-02 15:04:05"}} {{$value.User.Name}} 阅读 ({{$value.Pv}}) 评论 ({{$value.Review}}) 点赞 ({{$value.Like}})
+                            <span style="margin-left: 5px">标签：</span><a href="javascript:;">{{$value.Tag}}</a>
+                            <span style="margin-left: 5px">分类：</span><a href="javascript:;">{{$value.Category.Name}}</a>
+                            {{if eq $value.Recommend 1}}
+                                <span style="margin-left: 5px"><a href="javascript:;" style="color: #FF5722">顶置</a></span>
+                            {{end}}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                {{end}}
+
+
+                <div class="topicListFooter">
+                    <div id="nav_next_page">
+                        {{if gt .Paginator.CurrentPage 1}}
+                            <a class="prev" href="/list?page={{IndexDecrOne $.Paginator.CurrentPage}}{{if $.Date}}&date={{$.Date}}{{end}}{{if $.CategoryID}}&c={{$.CategoryID}}{{end}}">上一页</a>
+                        {{end}}
+                        {{if lt .Paginator.CurrentPage .Paginator.TotalPage}}
+                            <a class="next" href="/list?page={{IndexAddOne $.Paginator.CurrentPage}}{{if $.Date}}&date={{$.Date}}{{end}}{{if $.CategoryID}}&c={{$.CategoryID}}{{end}}">下一页</a>
+                        {{end}}
+                        {{if gt .Paginator.TotalPage 0}}
+                            <span class="current">第 {{.Paginator.CurrentPage}} 页 </span>
+                            <span class="num">总 {{.Paginator.TotalPage}} 页</span>
+                        {{end}}
+                    </div>
+                </div>
+
+            </div><!--end: forFlow -->
+
+        </div><!--end: mainContent 主体内容容器-->
+
+        <div id="sideBar">
+            {{template "front-right.html" .}}
+        </div><!--end: sideBar 侧边栏容器 -->
+        <div class="clear"></div>
+    </div><!--end: main -->
+
+    {{template "front-footer.html" .}}
+    <!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+</body>
+</html>

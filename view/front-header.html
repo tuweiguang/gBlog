@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="/static/css/menu.css" />
+<div id="header">
+    <div class="header-bg">
+        <div id="blogTitle">
+            <a id="lnkBlogLogo" href="/">
+                <img id="blogLogo" src="/static/images/logo.gif" alt="返回主页" />
+            </a>
+
+            <!--done-->
+            <h1>
+                <a id="Header1_HeaderTitle" class="headermaintitle" href="/">gBlog</a>
+            </h1>
+            <h2>
+                一个使用 Gin 开发的博客系统
+            </h2>
+
+
+        </div>
+    </div><!--end: blogTitle 博客的标题和副标题 -->
+    <div id="navigator" class="diyBg">
+
+        <ul id="navList">
+{{/*            {{range $k ,$v := $.Menu}}*/}}
+{{/*                <li>*/}}
+{{/*                    <a target="{{$v.Target}}" id="blog_nav_contact" class="menu" href="{{$v.Url}}">*/}}
+{{/*                        {{$v.Title}}*/}}
+{{/*                    </a>*/}}
+{{/*                    <ul>*/}}
+{{/*                        {{range $kk,$vv := $v.Son}}*/}}
+{{/*                            <li>*/}}
+{{/*                                <a target="{{$vv.Target}}" class="menu" href="{{$vv.Url}}">{{$vv.Title}}</a>*/}}
+{{/*                            </li>*/}}
+{{/*                        {{end}}*/}}
+{{/*                    </ul>*/}}
+{{/*                </li>*/}}
+{{/*            {{end}}*/}}
+
+            <li>
+                <a target="none" id="blog_nav_contact" class="menu" href="/">
+                    首页
+                </a>
+            </li>
+        </ul>
+    </div><!--end: navigator 博客导航栏 -->
+</div>
+<script src="/static/js/jquery-2.2.0.min.js"></script>
+<script>
+    $(function () {
+
+        $("#navList li").hover(function () {
+            $(this).children("ul").show()
+        },function () {
+            $(this).children("li").hide()
+        })
+
+        $("#navList li ul").hover(function () {
+            $(this).siblings(":first").addClass("firstMenu").css("color","#000");
+            $(this).show()
+        },function () {
+            $(this).siblings(":first").removeClass("firstMenu").css("color","#fff");
+            $(this).hide()
+        })
+    })
+</script>
+<!--end: header 头部 -->

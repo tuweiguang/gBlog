@@ -56,6 +56,15 @@ func GetSomeArticle(offset, limit int) []*Article {
 	return some
 }
 
+func GetAllArticle() []*Article {
+	all := make([]*Article, 0)
+	err := db.GetMySQL().Find(&all).Error
+	if err != nil {
+		log.GetLog().Error(fmt.Sprintf("GetAllArticle error:%v", err))
+	}
+	return all
+}
+
 func CreateArticle(userId int64, title string, categoryId int, tag string, content string) {
 	article := Article{
 		UserId:     userId,

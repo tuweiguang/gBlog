@@ -7,6 +7,7 @@ import (
 	"gBlog/commom/log"
 	"gBlog/commom/util"
 	"gBlog/controllers/admin"
+	"gBlog/controllers/homepage"
 	"gBlog/middleware"
 	"github.com/gin-gonic/gin"
 	"html/template"
@@ -22,9 +23,11 @@ func init() {
 
 	// 设置模板函数
 	e.SetFuncMap(template.FuncMap{
-		"IndexForOne":  util.IndexForOne,
-		"IndexDecrOne": util.IndexDecrOne,
-		"IndexAddOne":  util.IndexAddOne,
+		"IndexForOne":   util.IndexForOne,
+		"IndexDecrOne":  util.IndexDecrOne,
+		"IndexAddOne":   util.IndexAddOne,
+		"dateformat":    util.Dateformat,
+		"StringReplace": util.StringReplace,
 	})
 
 	//渲染模板
@@ -95,17 +98,19 @@ func authenticationRouter() {
 
 func noAuthenticationRouter() {
 	login := new(admin.LoginCrl)
+	content := new(homepage.ContentCtl)
 	e.Any("/login", middleware.PrintSession(), login.Login)
 	e.GET("/admin", middleware.Validate(e), func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 
-	e.GET("/list.html", func(context *gin.Context) {
-		//	c.HTML(http.StatusOK, "view/detail.html", gin.H{
-		//		// template.HTML 让模板中的参数不要做HTML转义
-		//		"data": template.HTML(""),
-		//	})
-	})
+	//e.GET("/list.html", func(context *gin.Context) {
+	//	//	c.HTML(http.StatusOK, "view/detail.html", gin.H{
+	//	//		// template.HTML 让模板中的参数不要做HTML转义
+	//	//		"data": template.HTML(""),
+	//	//	})
+	//})
+	e.GET("/list.html", middleware.Prepare(), content.List)
 	e.GET("/detail/:id([0-9]+).html", func(context *gin.Context) {
 		id := context.Param("id([0-9]+).html")
 		fmt.Printf("==========> %v,%v", context.Request.URL, id)
