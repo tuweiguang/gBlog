@@ -7,8 +7,10 @@
     <meta http-equiv="Cache-Control" content="no-transform" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <title>{{$.index}} - {{$.title}}</title>
-    <meta name="description" content="{{$.Data.Remark}}"/>
-    <meta name="keywords" content="{{$.Data.Tag}}">
+{{/*    <meta name="description" content="{{$.Data.Remark}}"/>*/}}
+    {{if .Data}}
+        <meta name="keywords" content="{{$.Data.Tag}}">
+    {{end}}
     <link rel="stylesheet" href="/static/css/blog-common.min.css" />
     <link id="MainCss" rel="stylesheet" href="/static/css/bundle-codinglife.min.css" />
     <link rel="stylesheet" href="/static/md/css/editormd.preview.css" />
@@ -44,7 +46,7 @@
 
 <!--done-->
 <div id="home">
-    {{template "home/leechan/header.html" .}}
+    {{template "front-header.html" .}}
 
     <div id="main">
         <div id="mainContent" style="margin-bottom: 20px">
@@ -54,22 +56,32 @@
                     <div id="topics">
                         <div class="post">
                             <h1 class = "postTitle">
-                                <a id="cb_post_title_url" class="postTitle2" href="javascript:;">{{$.Data.Title}}</a>
+                                <a id="cb_post_title_url" class="postTitle2" href="javascript:;">
+                                    {{if .Data}}
+                                        {{$.Data.Title}}
+                                    {{end}}
+                                </a>
                             </h1>
                             <div class="clear"></div>
                             <div class="postBody markdown-body editormd-html-preview" id="postBody">
-{{/*                                {{str2html $.Data.Html}}*/}}
-                                ......
+                                {{if .Data}}
+                                    {{MD2HTML $.Data.Content}}
+                                {{end}}
                             </div>
                             <div class="postDesc">
-                                <span id="post-date">{{dateformat $.Data.Created "2006-01-02 15:04:05"}}</span>&nbsp;
-                                <a href="javascript:;">{{$.Data.User.Name}}</a> 阅读(<span id="post_view_count">{{$.Data.Pv}}</span>) 评论(<span id="post_comment_count">{{$.Data.Review}}</span>)
-                                <span style="margin-left: 5px">标签：</span><a href="javascript:;">{{$.Data.Tag}}</a>
-                                <span style="margin-left: 5px">分类：</span><a href="javascript:;">{{$.Data.Category.Name}}</a>
+                                {{if .Data}}
+                                    <span id="post-date">{{dateformat $.Data.CreatedAt "2006-01-02 15:04:05"}}</span>&nbsp;
+                                    <a href="javascript:;">{{$.Data.User.Name}}</a> 阅读(<span id="post_view_count">{{$.Data.Pv}}</span>) 评论(<span id="post_comment_count">{{$.Data.Review}}</span>)
+                                    <span style="margin-left: 5px">标签：</span><a href="javascript:;">{{$.Data.Tag}}</a>
+                                    <span style="margin-left: 5px">分类：</span><a href="javascript:;">{{$.Data.Category.Name}}</a>
+                                {{end}}
                             </div>
                             <div>
                                 <span class="like">
-                                    <a href="javascript:;"> 很赞哦！ </a><span>({{$.Data.Like}})</span>
+                                    <a href="javascript:;"> 很赞哦！ </a>
+                                    {{if .Data}}
+                                        <span>({{$.Data.Like}})</span>
+                                    {{end}}
                                 </span>
                             </div>
                         </div>
@@ -77,18 +89,18 @@
                     </div><!--end: topics 文章、评论容器-->
                 </div>
             </div>
-            {{template "home/leechan/review.html" .}}
+{{/*            {{template "front-review.html" .}}*/}}
             <!--end: forFlow -->
         </div><!--end: mainContent 主体内容容器-->
 
         <div id="sideBar">
-            {{template "home/leechan/right.html" .}}
+            {{template "front-right.html" .}}
             <!--end: sideBarMain -->
         </div><!--end: sideBar 侧边栏容器 -->
         <div class="clear"></div>
     </div><!--end: main -->
 
-    {{template "home/leechan/footer.html" .}}
+    {{template "front-footer.html" .}}
     <!--end: footer -->
 </div><!--end: home 自定义的最大容器 -->
 </body>
@@ -137,4 +149,19 @@
         photos: 'body'
         /*,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）*/
     });
+</script>
+
+<script>
+    // 防止html内容转义
+    function htmlDecode ( str ) {
+        var ele = document.createElement('span');
+        ele.innerHTML = str;
+        return ele.textContent;
+    }
+
+    function PreventEscape() {
+        var html = document.getElementById("postBody");
+        html.innerHTML = htmlDecode(html.innerHTML);
+    }
+    PreventEscape();
 </script>

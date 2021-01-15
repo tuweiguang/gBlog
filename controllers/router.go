@@ -9,6 +9,7 @@ import (
 	"gBlog/controllers/admin"
 	"gBlog/controllers/homepage"
 	"gBlog/middleware"
+	"gBlog/utils"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
@@ -28,6 +29,7 @@ func init() {
 		"IndexAddOne":   util.IndexAddOne,
 		"dateformat":    util.Dateformat,
 		"StringReplace": util.StringReplace,
+		"MD2HTML":       utils.MarkdownToHTML,
 	})
 
 	//渲染模板
@@ -107,15 +109,12 @@ func noAuthenticationRouter() {
 	//e.GET("/list.html", func(context *gin.Context) {
 	//	//	c.HTML(http.StatusOK, "view/detail.html", gin.H{
 	//	//		// template.HTML 让模板中的参数不要做HTML转义
-	//	//		"data": template.HTML(""),
+	//			"data": template.HTML(""),
 	//	//	})
 	//})
+	e.GET("/", content.Home)
 	e.GET("/list.html", middleware.Prepare(), content.List)
-	e.GET("/detail/:id([0-9]+).html", func(context *gin.Context) {
-		id := context.Param("id([0-9]+).html")
-		fmt.Printf("==========> %v,%v", context.Request.URL, id)
-		context.JSON(http.StatusOK, nil)
-	})
+	e.GET("/detail/:id([0-9]+).html", middleware.Prepare(), content.Detail)
 
 	// 没有匹配到走下面
 	e.NoRoute(func(c *gin.Context) {

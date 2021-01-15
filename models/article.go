@@ -65,6 +65,18 @@ func GetAllArticle() []*Article {
 	return all
 }
 
+func GetArticle(id int) []*Article {
+	//var article []*Article
+	article := new(Article)
+	err := db.GetMySQL().Where("id = ?", id).First(article).Error
+	if err != nil {
+		log.GetLog().Error(fmt.Sprintf("GetArticle error:%v", err))
+	}
+	a := make([]*Article, 0)
+	a = append(a, article)
+	return a
+}
+
 func CreateArticle(userId int64, title string, categoryId int, tag string, content string) {
 	article := Article{
 		UserId:     userId,
