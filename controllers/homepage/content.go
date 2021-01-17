@@ -19,8 +19,8 @@ func (cc *ContentCtl) List(c *gin.Context) {
 	offset := (page - 1) * admin.LIMIT                   // 偏移量
 
 	cate, _ := strconv.Atoi(c.Query("page"))
-	//tag,_ := strconv.Atoi(c.Query("tag")) //根据tag获取
-	//date,_ := strconv.Atoi(c.Query("date"))//根据日期获取
+	tag := c.Query("tag")   //根据tag获取
+	date := c.Query("date") //根据日期获取
 
 	var res gin.H
 	res, ok := c.MustGet("common").(gin.H)
@@ -29,7 +29,14 @@ func (cc *ContentCtl) List(c *gin.Context) {
 	}
 	fmt.Printf("====================> common:%v \n", res)
 	res["CategoryID"] = cate
-	articles := models.GetSomeArticle(offset, admin.LIMIT)
+	var articles []*models.Article
+	if len(tag) > 0 && len(date) > 0 || len(tag) == 0 && len(date) == 0 {
+		articles = models.GetSomeArticle(offset, admin.LIMIT)
+	} else if len(tag) > 0 && len(date) == 0 {
+		articles = models.GetSomeArticleByTag(offset, admin.LIMIT, tag)
+	} else if len(tag) == 0 && len(date) > 0 {
+		articles = models.GetSomeArticleByDate(offset, admin.LIMIT, date)
+	}
 
 	var users []int64
 	var categorys []int

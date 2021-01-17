@@ -56,6 +56,24 @@ func GetSomeArticle(offset, limit int) []*Article {
 	return some
 }
 
+func GetSomeArticleByTag(offset, limit int, tag string) []*Article {
+	some := make([]*Article, limit)
+	err := db.GetMySQL().Raw("SELECT * FROM article as b1 inner join (select id from article limit ?,?) as b2 on b1.id = b2.id where b1.tag = ?", offset, limit, tag).Scan(&some).Error
+	if err != nil {
+		log.GetLog().Error(fmt.Sprintf("GetSomeArtcle offset:%v limit:%v error:%v", offset, limit, err))
+	}
+	return some
+}
+
+func GetSomeArticleByDate(offset, limit int, date string) []*Article {
+	some := make([]*Article, limit)
+	err := db.GetMySQL().Raw("SELECT * FROM article as b1 inner join (select id from article limit ?,?) as b2 on b1.id = b2.id where date_format(b1.created_at, '%Y-%m') = ?", offset, limit, date).Scan(&some).Error
+	if err != nil {
+		log.GetLog().Error(fmt.Sprintf("GetSomeArtcle offset:%v limit:%v error:%v", offset, limit, err))
+	}
+	return some
+}
+
 func GetAllArticle() []*Article {
 	all := make([]*Article, 0)
 	err := db.GetMySQL().Find(&all).Error

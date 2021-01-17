@@ -5,6 +5,7 @@ import (
 	"github.com/russross/blackfriday"
 	"io/ioutil"
 	"os"
+	"regexp"
 )
 
 func MarkdownToHTML(md string) string {
@@ -28,7 +29,10 @@ func MarkdownToHTML(md string) string {
 	//	blackfriday.EXTENSION_HARD_LINE_BREAK
 
 	unsafe := blackfriday.Run([]byte(md))
-	html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+	//html := bluemonday.UGCPolicy().AllowAttrs("value").OnElements("li").SanitizeBytes(unsafe)
+	//html := bluemonday.StrictPolicy().SanitizeBytes(unsafe)
+
+	html := bluemonday.UGCPolicy().AllowAttrs("title").Matching(regexp.MustCompile(`[\p{L}\p{N}\s\-_',:\[\]!\./\\\(\)&]*`)).Globally().SanitizeBytes(unsafe)
 	return string(html)
 	//renderer := blackfriday.HtmlRenderer(myHTMLFlags, "", "")
 	//bytes := blackfriday.MarkdownOptions([]byte(md), renderer, blackfriday.Options{

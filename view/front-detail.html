@@ -35,6 +35,17 @@
     .like a {
         color: #fff !important;
     }
+    blockquote{
+        border-left:3px solid green;
+        background-color:#ccc;
+        margin-left:4em;
+    }
+    ol li{
+        list-style-type: decimal;
+    }
+    ul li{
+        list-style-type: disc;
+    }
 </style>
 <body>
 <a name="top"></a>
@@ -64,9 +75,7 @@
                             </h1>
                             <div class="clear"></div>
                             <div class="postBody markdown-body editormd-html-preview" id="postBody">
-                                {{if .Data}}
-                                    {{MD2HTML $.Data.Content}}
-                                {{end}}
+                                {{$.Data.Content}}
                             </div>
                             <div class="postDesc">
                                 {{if .Data}}
@@ -132,17 +141,6 @@
 
 </script>
 
-<script src="/static/md/lib/marked.min.js"></script>
-<script src="/static/md/lib/prettify.min.js"></script>
-
-<script src="/static/md/lib/raphael.min.js"></script>
-<script src="/static/md/lib/underscore.min.js"></script>
-<script src="/static/md/lib/sequence-diagram.min.js"></script>
-<script src="/static/md/lib/flowchart.min.js"></script>
-<script src="/static/md/lib/jquery.flowchart.min.js"></script>
-
-<script src="/static/md/editormd.js"></script>
-<script src="/static/lib/layui/layui.all.js"></script>
 <script>
     //调用示例
     layer.photos({
@@ -151,6 +149,7 @@
     });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
     // 防止html内容转义
     function htmlDecode ( str ) {
@@ -163,5 +162,13 @@
         var html = document.getElementById("postBody");
         html.innerHTML = htmlDecode(html.innerHTML);
     }
-    PreventEscape();
+    //PreventEscape();
+
+    function MD2HTML() {
+        var text = document.getElementById("postBody").innerHTML;
+        text = text.replace(/(^\s*)/g, ""); //去除前面空格
+        text = text.replace(/&gt;/g,">");//将&gt;转成>
+        document.getElementById("postBody").innerHTML = marked(text);
+    }
+    MD2HTML();
 </script>
