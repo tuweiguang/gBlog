@@ -112,7 +112,7 @@ func noAuthenticationRouter() {
 	//			"data": template.HTML(""),
 	//	//	})
 	//})
-	e.GET("/", content.Home)
+	e.GET("/", middleware.StatisticsPV(), content.Home)
 	e.GET("/list.html", middleware.Prepare(), content.List)
 	e.GET("/detail/:id([0-9]+).html", middleware.Prepare(), content.Detail)
 

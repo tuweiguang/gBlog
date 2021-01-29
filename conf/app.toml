@@ -3,3 +3,6 @@
     sessionExpire = 3600 # session过期时间,秒
 
     logMode = true # gorm是否打印sql语句
+
+[blog]
+    titile = "Welcome to Twilight"

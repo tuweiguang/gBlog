@@ -19,7 +19,7 @@ type Article struct {
 	Tag        string     `gorm:"column:tag"`
 	Content    string     `gorm:"column:content"`
 	Status     int        `gorm:"column:status"`
-	Pv         int        `gorm:"column:pv"`
+	Pv         int        `gorm:"column:pv"` //每篇文章的点击量
 	Review     int        `gorm:"column:review"`
 	Recommend  int        `gorm:"column:recommend"`
 	Like       int        `gorm:"column:like"`

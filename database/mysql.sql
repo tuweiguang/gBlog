@@ -10,7 +10,7 @@ CREATE TABLE `user` (
   `created` datetime DEFAULT NULL COMMENT '创建时间',
   `status` int DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT '用户基本表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户基本表';
 
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
@@ -39,4 +39,14 @@ CREATE TABLE `category` (
   `sort` int DEFAULT '0' COMMENT '排序',
   `status` int DEFAULT '1' COMMENT '状态1正常，2删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `access_log`;
+CREATE TABLE `access_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `ip` varchar(15) NOT NULL DEFAULT '' COMMENT 'ip',
+  `city` varchar(50) NOT NULL DEFAULT '' COMMENT '城市',
+  `uri` varchar(255) NOT NULL DEFAULT '' COMMENT '访问路由',
+  `create` datetime DEFAULT NULL COMMENT '访问时间',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

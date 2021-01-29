@@ -1,6 +1,7 @@
 package homepage
 
 import (
+	"fmt"
 	"gBlog/models"
 	"github.com/gin-gonic/gin"
 	"strings"
@@ -55,4 +56,27 @@ func (cc *CommonCtl) Keywords(c *gin.Context) {
 	res["DateTimeKey"] = dateTimeKey
 	res["DateCount"] = count
 	c.Set("common", res)
+}
+
+//点击量
+func (cc *CommonCtl) PV(c *gin.Context) {
+	// 获取uri
+	uri := c.FullPath()
+
+	//需要在nginx配置如下:
+	//location /go/ {
+	//        proxy_set_header X-Forward-For $remote_addr;
+	//        proxy_set_header X-real-ip $remote_addr;
+	//        proxy_pass http://127.0.0.1:8080/go/;
+	//}
+	ip := c.ClientIP()
+
+	models.CreateAccessLog(ip, "", uri)
+	models.AddPV(uri)
+	fmt.Printf("uri:%v ip:%v\n", uri, ip)
+}
+
+//人数(根据cookie来判断)
+func (cc *CommonCtl) UV(c *gin.Context) {
+
 }
