@@ -53,6 +53,10 @@ func (g *GRedis) Get(key string) *redis.StringCmd {
 	return g.rdb.Get(ctx, key)
 }
 
+func (g *GRedis) Incr(key string) *redis.IntCmd {
+	return g.rdb.Incr(ctx, key)
+}
+
 func (g *GRedis) HSet(key string, values ...interface{}) *redis.IntCmd {
 	return g.rdb.HSet(ctx, key, values...)
 }
@@ -63,6 +67,14 @@ func (g *GRedis) HIncrBy(key, field string, incr int64) *redis.IntCmd {
 
 func (g *GRedis) HGet(key, field string) *redis.StringCmd {
 	return g.rdb.HGet(ctx, key, field)
+}
+
+func (g *GRedis) HLen(key string) *redis.IntCmd {
+	return g.rdb.HLen(ctx, key)
+}
+
+func (g *GRedis) HGetAll(key string) *redis.StringStringMapCmd {
+	return g.rdb.HGetAll(ctx, key)
 }
 
 func (g *GRedis) Close() error {

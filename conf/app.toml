@@ -1,8 +1,14 @@
 [app]
     httpAddr = "localhost:8080"
-    sessionExpire = 3600 # session过期时间,秒
-
     logMode = true # gorm是否打印sql语句
 
+[session]
+    name = "sessionId"
+    expire = 3600 # session过期时间,秒
+    path = "/"
+    domain = "localhost"
+    secure = false
+    httpOnly = true
+
 [blog]
-    titile = "Welcome to Twilight"
+    title = "Welcome to Twilight"

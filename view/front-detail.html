@@ -6,7 +6,7 @@
     <meta name="referrer" content="never" />
     <meta http-equiv="Cache-Control" content="no-transform" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>{{$.index}} - {{$.title}}</title>
+    <title>{{$.Data.Title}} - Twilight</title>
 {{/*    <meta name="description" content="{{$.Data.Remark}}"/>*/}}
     {{if .Data}}
         <meta name="keywords" content="{{$.Data.Tag}}">
@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/static/md/css/editormd.preview.css" />
     <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/static/css/bundle-codinglife-mobile.min.css" />
     <link rel="stylesheet" href="/static/css/{{$.bgClass}}.css" />
+    <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-9ea6f77580.min.css">
 </head>
 <style>
     .editormd-html-preview {
@@ -47,6 +48,18 @@
     ul li{
         list-style-type: disc;
     }
+    .title-article {
+        font-size: 28px;
+        word-wrap: break-word;
+        color: #222226;
+        font-weight: 600;
+        margin: 0;
+        word-break: break-all;
+    }
+    .article-read-img, .article-collect-img {
+        width: 24px;
+        height: 24px;
+    }
 </style>
 <body>
 <a name="top"></a>
@@ -68,23 +81,24 @@
                     <div id="topics">
                         <div class="post">
                             <h1 class = "postTitle">
-                                <a id="cb_post_title_url" class="postTitle2" href="javascript:;">
+                                <a id="cb_post_title_url" class="postTitle2 title-article" href="javascript:;">
                                     {{if .Data}}
                                         {{$.Data.Title}}
                                     {{end}}
                                 </a>
                             </h1>
-                            <div class="clear"></div>
-                            <div class="postBody markdown-body editormd-html-preview" id="postBody">
-                                {{$.Data.Content}}
-                            </div>
                             <div class="postDesc">
                                 {{if .Data}}
                                     <span id="post-date">{{dateformat $.Data.CreatedAt "2006-01-02 15:04:05"}}</span>&nbsp;
-                                    <a href="javascript:;">{{$.Data.User.Name}}</a> 阅读(<span id="post_view_count">{{$.Data.Pv}}</span>) 评论(<span id="post_comment_count">{{$.Data.Review}}</span>)
+                                    <a href="javascript:;">{{$.Data.User.Name}}</a> <img class="article-read-img" src="/static/img/articleReadEyes.png" alt=""> <span id="post_view_count">{{$.Data.Pv}}</span> <img class="article-collect-img" src="/static/img/tobarCollect.png" alt=""> <span id="post_comment_count">{{$.Data.Review}}</span>
                                     <span style="margin-left: 5px">标签：</span><a href="javascript:;">{{$.Data.Tag}}</a>
                                     <span style="margin-left: 5px">分类：</span><a href="javascript:;">{{$.Data.Category.Name}}</a>
                                 {{end}}
+                            </div>
+
+                            <div class="clear"></div>
+                            <div class="postBody markdown-body editormd-html-preview" id="postBody">
+                                {{$.Data.Content}}
                             </div>
                             <div>
                                 <span class="like">
@@ -118,13 +132,13 @@
 <script src="/static/js/jquery-2.2.0.min.js"></script>
 <script>
     $(function () {
-        $.ajax({
-            url:'/pv/{{$.Data.Id}}.html',
-            type:'get',
-            success:function (data) {
-                console.log(data);
-            }
-        });
+        {{/*$.ajax({*/}}
+        {{/*    url:'/pv/{{$.Data.Id}}.html',*/}}
+        {{/*    type:'get',*/}}
+        {{/*    success:function (data) {*/}}
+        {{/*        console.log(data);*/}}
+        {{/*    }*/}}
+        {{/*});*/}}
 
         $(".like a").click(function () {
             $.ajax({

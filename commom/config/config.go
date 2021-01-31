@@ -36,14 +36,28 @@ func (db *DB) String() string {
 var db *DBConfig
 
 type APPConfig struct {
-	Title string
-	App   *APP `toml:"app"`
+	Title   string
+	App     *APP     `toml:"app"`
+	Session *Session `toml:"session"`
+	Blog    *Blog    `toml:"blog"`
 }
 
 type APP struct {
-	HttpAddr      string `toml:"httpAddr"`
-	SessionExpire int    `toml:"sessionExpire"`
-	LogMode       bool   `toml:"logMode"`
+	HttpAddr string `toml:"httpAddr"`
+	LogMode  bool   `toml:"logMode"`
+}
+
+type Session struct {
+	Name     string `toml:"name"`
+	Expire   int    `toml:"expire"`
+	Path     string `toml:"path"`
+	Domain   string `toml:"domain"`
+	Secure   bool   `toml:"secure"`
+	HttpOnly bool   `toml:"httpOnly"`
+}
+
+type Blog struct {
+	Title string `toml:"title"`
 }
 
 var app *APPConfig
@@ -101,6 +115,20 @@ func GetAPPConfig() *APP {
 		return &APP{}
 	}
 	return app.App
+}
+
+func GetSessionConfig() *Session {
+	if app.Session == nil {
+		return &Session{}
+	}
+	return app.Session
+}
+
+func GetBlogConfig() *Blog {
+	if app.Blog == nil {
+		return &Blog{}
+	}
+	return app.Blog
 }
 
 func GetLOGConfig() *LOG {

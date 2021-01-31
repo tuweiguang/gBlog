@@ -112,9 +112,9 @@ func noAuthenticationRouter() {
 	//			"data": template.HTML(""),
 	//	//	})
 	//})
-	e.GET("/", middleware.StatisticsPV(), content.Home)
-	e.GET("/list.html", middleware.Prepare(), content.List)
-	e.GET("/detail/:id([0-9]+).html", middleware.Prepare(), content.Detail)
+	e.GET("/", middleware.StatisticsPVAndUV(e), content.Home)
+	e.GET("/list.html", middleware.StatisticsPVAndUV(e), middleware.Prepare(), content.List)
+	e.GET("/detail/:id([0-9]+).html", middleware.StatisticsPVAndUV(e), middleware.Prepare(), content.Detail)
 
 	// 没有匹配到走下面
 	e.NoRoute(func(c *gin.Context) {

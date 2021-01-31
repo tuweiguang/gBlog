@@ -37,7 +37,9 @@ func (l *LoginCrl) Login(c *gin.Context) {
 				// httpOnly:true  js 脚本不能获取 cookie，可以防止跨站攻击，增加爬虫程序的难度
 				// domain: 要注意这个参数，设置什么就要在浏览器写什么
 				// 大坑：在浏览器必须输入http://localhost:8080/xxx 不能是http://127.0.0.1:8080/xxx,不然登陆返回cookie将在下次请求的时候不会携带，导致登陆不上
-				c.SetCookie("sessionId", sessionId, config.GetAPPConfig().SessionExpire, "/", "localhost", false, true)
+				c.SetCookie(config.GetSessionConfig().Name, sessionId, config.GetSessionConfig().Expire,
+					config.GetSessionConfig().Path, config.GetSessionConfig().Domain, config.GetSessionConfig().Secure,
+					config.GetSessionConfig().HttpOnly)
 			} else {
 				log.GetLog().Info(fmt.Sprintf("old session:%v", sessionId))
 				// 每次重新登陆将给一个新的session，删除旧的
@@ -48,7 +50,9 @@ func (l *LoginCrl) Login(c *gin.Context) {
 				}
 
 				sessionId = session.NewMemoryMgr().CreateSessoin()
-				c.SetCookie("sessionId", sessionId, config.GetAPPConfig().SessionExpire, "/", "localhost", false, true)
+				c.SetCookie(config.GetSessionConfig().Name, sessionId, config.GetSessionConfig().Expire,
+					config.GetSessionConfig().Path, config.GetSessionConfig().Domain, config.GetSessionConfig().Secure,
+					config.GetSessionConfig().HttpOnly)
 				log.GetLog().Info(fmt.Sprintf("new session:%v", sessionId))
 			}
 

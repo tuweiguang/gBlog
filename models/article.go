@@ -109,3 +109,12 @@ func CreateArticle(userId int64, title string, categoryId int, tag string, conte
 		log.GetLog().Error(fmt.Sprintf("CreateArticle error:%v", result.Error))
 	}
 }
+
+func AddArticleByPV(id uint, pv int) {
+	article := new(Article)
+	article.Id = id
+	err := db.GetMySQL().Model(article).Update("pv", pv).Error
+	if err != nil {
+		log.GetLog().Error(fmt.Sprintf("AddArticleByPV error:%v", err))
+	}
+}

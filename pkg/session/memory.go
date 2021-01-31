@@ -21,7 +21,7 @@ var memoryMgr MemoryMgr
 func NewMemoryMgr() *MemoryMgr {
 	mOnce.Do(func() {
 		memoryMgr.sessionMap = make(map[string]int64, SessionMapSize)
-		memoryMgr.sessionExpire = config.GetAPPConfig().SessionExpire
+		memoryMgr.sessionExpire = config.GetSessionConfig().Expire
 	})
 
 	return &memoryMgr

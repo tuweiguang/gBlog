@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"gBlog/models"
 	"github.com/gin-gonic/gin"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type CommonCtl struct{}
@@ -55,13 +57,17 @@ func (cc *CommonCtl) Keywords(c *gin.Context) {
 	res["DateTime"] = datetime
 	res["DateTimeKey"] = dateTimeKey
 	res["DateCount"] = count
+	res["PV"] = models.GetAllPV()
+	res["UV"] = models.GetUV()
+	res["Time"] = time.Now()
 	c.Set("common", res)
 }
 
 //点击量
 func (cc *CommonCtl) PV(c *gin.Context) {
 	// 获取uri
-	uri := c.FullPath()
+	//uri := c.FullPath()
+	uri := c.Request.URL.String()
 
 	//需要在nginx配置如下:
 	//location /go/ {
@@ -72,11 +78,26 @@ func (cc *CommonCtl) PV(c *gin.Context) {
 	ip := c.ClientIP()
 
 	models.CreateAccessLog(ip, "", uri)
-	models.AddPV(uri)
-	fmt.Printf("uri:%v ip:%v\n", uri, ip)
+	if strings.Contains(uri, "/detail/") {
+		idStr := c.Param("id([0-9]+).html")
+		ids := strings.Split(idStr, ".")
+		if len(ids) != 2 {
+			return
+		}
+		id, err := strconv.Atoi(ids[0])
+		if err != nil {
+			return
+		}
+		pv := models.AddArticlePV(fmt.Sprintf("%v", id))
+		if pv%10 == 0 { //优化，每10次入库一次
+			models.AddArticleByPV(uint(id), int(pv))
+		}
+	} else {
+		models.AddArticlePV(uri)
+	}
 }
 
 //人数(根据cookie来判断)
 func (cc *CommonCtl) UV(c *gin.Context) {
-
+	models.IncrUV()
 }

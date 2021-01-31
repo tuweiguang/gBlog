@@ -15,23 +15,3 @@ func Prepare() gin.HandlerFunc {
 		c.Next()
 	}
 }
-
-//人数
-func StatisticsUV() gin.HandlerFunc {
-	comCtl := new(homepage.CommonCtl)
-	return func(c *gin.Context) {
-		c.Next()
-
-		comCtl.UV(c)
-	}
-}
-
-//点击量
-func StatisticsPV() gin.HandlerFunc {
-	comCtl := new(homepage.CommonCtl)
-	return func(c *gin.Context) {
-		c.Next()
-
-		comCtl.PV(c)
-	}
-}

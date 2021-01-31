@@ -19,7 +19,7 @@ type RedisMgr struct {
 func NewRedisMgr() *RedisMgr {
 	rOnce.Do(func() {
 		redisMgr.redis = db.GetRedis()
-		redisMgr.sessionExpire = config.GetAPPConfig().SessionExpire
+		redisMgr.sessionExpire = config.GetSessionConfig().Expire
 	})
 
 	return &redisMgr

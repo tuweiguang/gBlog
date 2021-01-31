@@ -2,7 +2,9 @@ package middleware
 
 import (
 	"fmt"
+	"gBlog/commom/config"
 	"gBlog/commom/log"
+	"gBlog/controllers/homepage"
 	"gBlog/pkg/session"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -44,3 +46,38 @@ func Validate(e *gin.Engine) gin.HandlerFunc {
 }
 
 // https://www.cnblogs.com/wind-zhou/p/13114548.html
+
+func StatisticsPVAndUV(e *gin.Engine) gin.HandlerFunc {
+	comCtl := new(homepage.CommonCtl)
+	return func(c *gin.Context) {
+		cookie, err := c.Cookie("sessionId")
+		if err == nil {
+			// 到本地或者redis里面去验证sessionId
+			if status := session.NewMemoryMgr().CheckSession(cookie); status > session.SessionExist {
+				url := c.Request.URL.String()
+				log.GetLog().Info(fmt.Sprintf("url = %v, invalid cookie!", url))
+				if status == session.SessionExpire {
+					// 删除session
+					session.NewMemoryMgr().DelSession(cookie)
+				}
+
+				//设置cookie
+				sessionId := session.NewMemoryMgr().CreateSessoin()
+				c.SetCookie(config.GetSessionConfig().Name, sessionId, config.GetSessionConfig().Expire,
+					config.GetSessionConfig().Path, config.GetSessionConfig().Domain, config.GetSessionConfig().Secure,
+					config.GetSessionConfig().HttpOnly)
+
+				//增加UV
+				comCtl.UV(c)
+			}
+		} else {
+			//设置cookie
+			sessionId := session.NewMemoryMgr().CreateSessoin()
+			c.SetCookie(config.GetSessionConfig().Name, sessionId, config.GetSessionConfig().Expire,
+				config.GetSessionConfig().Path, config.GetSessionConfig().Domain, config.GetSessionConfig().Secure,
+				config.GetSessionConfig().HttpOnly)
+			comCtl.UV(c)
+		}
+		comCtl.PV(c)
+	}
+}

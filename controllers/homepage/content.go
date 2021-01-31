@@ -48,6 +48,7 @@ func (cc *ContentCtl) List(c *gin.Context) {
 		if !utils.IsExistsElementInt(categorys, v.CategoryId) {
 			categorys = append(categorys, v.CategoryId)
 		}
+		v.Pv = models.GetArticlePV(fmt.Sprintf("%v", v.Id))
 	}
 	someUser := models.GetSomeUserByIds(users)
 	someCate := models.GetCategoryById(categorys)
@@ -106,6 +107,8 @@ func (cc *ContentCtl) Detail(c *gin.Context) {
 			if !utils.IsExistsElementInt(categorys, v.CategoryId) {
 				categorys = append(categorys, v.CategoryId)
 			}
+
+			v.Pv = models.GetArticlePV(fmt.Sprintf("%v", v.Id))
 		}
 		someUser := models.GetSomeUserByIds(users)
 		someCate := models.GetCategoryById(categorys)
