@@ -91,6 +91,7 @@ main总体流程：
   6. 使用docker
   7. 引入etcd?
   8. psutil库采集主机信息
+  9. 引入EFK技术栈
   
 - 改进  
   2. 每请求一次，若session存在，则继续延长。
