@@ -76,13 +76,21 @@ main总体流程：
   1. 设计新的首页
   2. 增加一些特效
 
+- 2021.03.08 -- 2021.04.05
+  1. 代码优化
+  2. 使用docker
+  3. 在ecs上使用docker部署项目
+
 # todolist  
 - 未来
   1. 了解corba
-  2. grace 重启
+  2. grace 重启 ✔
   3. 使用JWT，代替session
   4. 使用ini包
   5. 前后端分离
+  6. 使用docker
+  7. 引入etcd?
+  8. psutil库采集主机信息
   
 - 改进  
   2. 每请求一次，若session存在，则继续延长。

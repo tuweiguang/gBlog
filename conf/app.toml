@@ -1,5 +1,6 @@
 [app]
     httpAddr = "localhost:8080"
+    pprofAddr = "localhost:6060"
     logMode = true # gorm是否打印sql语句
 
 [session]

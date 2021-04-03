@@ -23,9 +23,13 @@ func main() {
 	log.Init()
 	db.Init()
 
+	// 开启pprof，监听请求
 	go func() {
-		_ = http.ListenAndServe("localhost:6060", nil)
+		if err := http.ListenAndServe(config.GetAPPConfig().PProfAddr, nil); err != nil {
+			log.GetLog().Error(fmt.Sprintf("start pprof failed on %s\n", config.GetAPPConfig().PProfAddr))
+		}
 	}()
+
 	controllers.DefaultServerRun()
 
 	c := make(chan os.Signal, 1)
@@ -39,6 +43,7 @@ func main() {
 			db.Close()
 			log.GetLog().Sync()
 			time.Sleep(time.Second)
+			panic("service is closing!")
 			return
 		case syscall.SIGHUP:
 		default:

@@ -43,8 +43,9 @@ type APPConfig struct {
 }
 
 type APP struct {
-	HttpAddr string `toml:"httpAddr"`
-	LogMode  bool   `toml:"logMode"`
+	HttpAddr  string `toml:"httpAddr"`
+	PProfAddr string `toml:"pprofAddr"`
+	LogMode   bool   `toml:"logMode"`
 }
 
 type Session struct {
