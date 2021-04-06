@@ -33,7 +33,7 @@ func init() {
 	})
 
 	//渲染模板
-	e.LoadHTMLGlob("view/*")
+	e.LoadHTMLGlob("view/**/*")
 
 	//配置静态文件夹路径 第一个参数是api，第二个是文件夹路径
 	e.StaticFS("/static", http.Dir("./static"))
