@@ -46,7 +46,34 @@ ENTRYPOINT ["./gblog"]
 > - COPY：源路径需要是相对路径，不然失败？？
 > - Dockerfile文件要和应用项目在一个目录
 
-注意：需要修改conf里面的配置。
+**<u>注意：每次重新构建,都需要修改`conf/app.toml`和`conf/db.toml`文件</u>**
+
+```
+//conf/app.toml
+[app]
+    httpAddr = "0.0.0.0:8080"
+    pprofAddr = "0.0.0.0:6060"
+    ...
+[session]
+    ...
+    domain = "xxx.xxx.xxx.xxx" #ECS主机外网地址
+    ...
+...    
+```
+
+```
+//conf/db.toml
+[[db]]
+    ...
+    host = "xxx.xxx.xxx.xxx" #ECS主机本地私有地址
+    ...
+
+[[db]]
+    dbType = "redis"
+    host = "xxx.xxx.xxx.xxx" #ECS主机本地私有地址
+    dbNum = 0 #数据库
+...
+```
 
 ## 3. 构建
 
@@ -115,7 +142,7 @@ server {
 
 4. 服务启动但是访问不通？
 
-   需要将配置文件中`httpAddr = "localhost:8080"`地址改成`httpAddr = "0.0.0.0:8080"`。
+   需要将配置文件`app.toml`中`httpAddr = "localhost:8080"`地址改成`httpAddr = "0.0.0.0:8080"`。
 
 5. 可以访问到登陆首页，但是服务登陆不上？
 

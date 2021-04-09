@@ -83,10 +83,14 @@ main总体流程：
 
 - 2021.04.06 -- 2021.04.11
 
+# bug
+  1. 访问一次增加2次PV? 应该是跨域问题,Referrer-Policy : strict-origin-when-cross-origin
+
 # 本周task
   1. 了解阿里云docker仓库,并且将gBlog打包成镜像,上传
   2. 增加访问源地区记录 √
   3. 加密加盐 √
+  4. 跨域问题
 
 # todolist  
 - 未来
@@ -103,6 +107,7 @@ main总体流程：
   11. 引入es,添加搜索模块
   12. 了解Docker Compose
   13. access_log按日期分表
+  14. gin标准输出写入日志
   
 - 改进  
   2. 每请求一次，若session存在，则继续延长。

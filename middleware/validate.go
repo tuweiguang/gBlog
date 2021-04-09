@@ -48,8 +48,8 @@ func Validate(e *gin.Engine) gin.HandlerFunc {
 // https://www.cnblogs.com/wind-zhou/p/13114548.html
 
 func StatisticsPVAndUV(e *gin.Engine) gin.HandlerFunc {
-	comCtl := new(homepage.CommonCtl)
 	return func(c *gin.Context) {
+		comCtl := new(homepage.CommonCtl)
 		cookie, err := c.Cookie("sessionId")
 		if err == nil {
 			// 到本地或者redis里面去验证sessionId
@@ -79,5 +79,7 @@ func StatisticsPVAndUV(e *gin.Engine) gin.HandlerFunc {
 			comCtl.UV(c)
 		}
 		comCtl.PV(c)
+
+		c.Next()
 	}
 }
