@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"fmt"
-	"gBlog/commom/config"
-	"gBlog/commom/log"
+	"gBlog/common/config"
+	"gBlog/common/log"
 	"gBlog/controllers/homepage"
 	"gBlog/pkg/session"
 	"github.com/gin-gonic/gin"

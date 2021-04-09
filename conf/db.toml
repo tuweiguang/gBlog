@@ -34,3 +34,6 @@
 #    queryTimeout = "200ms"
 #    execTimeout = "300ms"
 #    tranTimeout = "400ms"
+
+[[db]]
+    dbType = "ip2region"

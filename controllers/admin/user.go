@@ -1,7 +1,10 @@
 package admin
 
 import (
-	"gBlog/commom/sys"
+	"gBlog/common"
+	"gBlog/common/config"
+	"gBlog/common/sys"
+	"gBlog/common/util"
 	"gBlog/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -71,10 +74,14 @@ func (u *UserCtl) Register(c *gin.Context) {
 			return
 		}
 
+		pw := info.Password
+		if config.GetAPPConfig().Env == common.EnvRelease {
+			pw = util.PasswordMD5(info.Password, info.Username)
+		}
 		//不存在则保存到数据库
 		user := &models.User{
 			Name:     info.Username,
-			Password: info.Password,
+			Password: pw,
 			Email:    info.Email,
 			Created:  time.Now(),
 			Status:   0,

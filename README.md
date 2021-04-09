@@ -85,6 +85,8 @@ main总体流程：
 
 # 本周task
   1. 了解阿里云docker仓库,并且将gBlog打包成镜像,上传
+  2. 增加访问源地区记录 √
+  3. 加密加盐 √
 
 # todolist  
 - 未来
@@ -96,9 +98,11 @@ main总体流程：
   6. 使用docker
   7. 引入etcd?
   8. psutil库采集主机信息
-  9. 引入EFK技术栈
+  9. 引入EFK技术栈,先收集nginx日志
   10. 加密加盐
   11. 引入es,添加搜索模块
+  12. 了解Docker Compose
+  13. access_log按日期分表
   
 - 改进  
   2. 每请求一次，若session存在，则继续延长。

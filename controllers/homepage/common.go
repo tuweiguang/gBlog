@@ -2,6 +2,7 @@ package homepage
 
 import (
 	"fmt"
+	"gBlog/common/db"
 	"gBlog/models"
 	"github.com/gin-gonic/gin"
 	"strconv"
@@ -76,8 +77,8 @@ func (cc *CommonCtl) PV(c *gin.Context) {
 	//        proxy_pass http://127.0.0.1:8080/go/;
 	//}
 	ip := c.ClientIP()
-
-	models.CreateAccessLog(ip, "", uri)
+	ipInfo := db.GetIP().Select(ip)
+	models.CreateAccessLog(ip, ipInfo.Country, ipInfo.City, ipInfo.ISP, uri)
 	if strings.Contains(uri, "/detail/") {
 		idStr := c.Param("id([0-9]+).html")
 		ids := strings.Split(idStr, ".")

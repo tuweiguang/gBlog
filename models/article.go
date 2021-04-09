@@ -2,8 +2,8 @@ package models
 
 import (
 	"fmt"
-	"gBlog/commom/db"
-	"gBlog/commom/log"
+	"gBlog/common/db"
+	"gBlog/common/log"
 	"math"
 	"time"
 )

@@ -3,9 +3,9 @@ package controllers
 import (
 	"context"
 	"fmt"
-	"gBlog/commom/config"
-	"gBlog/commom/log"
-	"gBlog/commom/util"
+	"gBlog/common/config"
+	"gBlog/common/log"
+	"gBlog/common/util"
 	"gBlog/controllers/admin"
 	"gBlog/controllers/homepage"
 	"gBlog/middleware"

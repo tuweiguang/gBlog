@@ -1,7 +1,7 @@
 package models
 
 import (
-	"gBlog/commom/db"
+	"gBlog/common/db"
 	"strconv"
 )
 

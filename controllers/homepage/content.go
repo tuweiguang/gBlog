@@ -2,7 +2,7 @@ package homepage
 
 import (
 	"fmt"
-	"gBlog/commom/log"
+	"gBlog/common/log"
 	"gBlog/controllers/admin"
 	"gBlog/models"
 	"gBlog/utils"

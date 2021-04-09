@@ -2,7 +2,7 @@ package session
 
 import (
 	"fmt"
-	"gBlog/commom/config"
+	"gBlog/common/config"
 	"sync"
 	"time"
 

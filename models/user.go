@@ -2,8 +2,11 @@ package models
 
 import (
 	"fmt"
-	"gBlog/commom/db"
-	"gBlog/commom/log"
+	"gBlog/common"
+	"gBlog/common/config"
+	"gBlog/common/db"
+	"gBlog/common/log"
+	"gBlog/common/util"
 	"time"
 )
 
@@ -29,6 +32,29 @@ func GetUser(username string) *User {
 
 	db.GetMySQL().First(user, "name=?", username)
 	return user
+}
+
+func CheckPassword(username string, password string) bool {
+	if username == "" || password == "" {
+		return false
+	}
+
+	user := new(User)
+
+	db.GetMySQL().First(user, "name=?", username)
+
+	if config.GetAPPConfig().Env == common.EnvRelease {
+		if util.PasswordMD5(password, username) == user.Password {
+			return true
+		}
+
+		return false
+	}
+	if password == user.Password {
+		return true
+	}
+
+	return false
 }
 
 // select * from user as b1 inner join (select id from user limit offset,limit) as b2 on b2.id = b1.id;

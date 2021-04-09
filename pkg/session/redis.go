@@ -1,8 +1,8 @@
 package session
 
 import (
-	"gBlog/commom/config"
-	"gBlog/commom/db"
+	"gBlog/common/config"
+	"gBlog/common/db"
 	uuid "github.com/satori/go.uuid"
 	"sync"
 	"time"

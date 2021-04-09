@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gBlog/commom/config"
-	"gBlog/commom/db"
-	"gBlog/commom/log"
+	"gBlog/common/config"
+	"gBlog/common/db"
+	"gBlog/common/log"
 	"gBlog/controllers"
 	"net/http"
 	_ "net/http/pprof"

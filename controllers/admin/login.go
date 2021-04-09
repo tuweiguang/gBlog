@@ -2,8 +2,8 @@ package admin
 
 import (
 	"fmt"
-	"gBlog/commom/config"
-	"gBlog/commom/log"
+	"gBlog/common/config"
+	"gBlog/common/log"
 	"gBlog/models"
 	"gBlog/pkg/session"
 	"github.com/gin-gonic/gin"
@@ -22,10 +22,7 @@ func (l *LoginCrl) Login(c *gin.Context) {
 			})
 			return
 		}
-		fmt.Printf("=============> username:%v,password:%v", info.Username, info.Password)
-		// 应该去数据库去验证
-		u := models.GetUser(info.Username)
-		if u.Password == info.Password {
+		if models.CheckPassword(info.Username, info.Password) {
 			sessionId, err := c.Cookie("sessionId")
 			if err != nil {
 				// 第一次来，没有sessionid，-->给用户建一个sessiondata，分配一个sessionid

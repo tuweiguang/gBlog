@@ -50,3 +50,8 @@ CREATE TABLE `access_log` (
   `create` datetime DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# 20210409
+# 增加列
+ALTER TABLE `access_log` add COLUMN `country` varchar(50) NOT NULL DEFAULT '' COMMENT '国家' AFTER `ip`;
+ALTER TABLE `access_log` add COLUMN `ISP` varchar(50) NOT NULL DEFAULT '' COMMENT '运营商' AFTER `city`;
