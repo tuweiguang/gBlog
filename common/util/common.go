@@ -1,7 +1,10 @@
 package util
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"errors"
+	"gBlog/common"
 	"strconv"
 )
 
@@ -22,4 +25,14 @@ func ToInt64(v interface{}) (re int64, err error) {
 		err = errors.New("不能转换")
 	}
 	return
+}
+
+// 加盐加密
+// 加密(password+盐)
+func PasswordMD5(password, username string) string {
+	h := md5.New()
+	h.Write([]byte(password + username + common.PasswordSalt))
+	cipherStr := h.Sum(nil)
+	result := hex.EncodeToString(cipherStr)
+	return result
 }
