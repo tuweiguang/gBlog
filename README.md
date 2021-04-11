@@ -87,7 +87,6 @@ main总体流程：
   3. 加密加盐
   4. 修复bug：访问一次`/list.html`增加2次PV? `front-list.html`中body属性包含url()，空的地址，所以默认会请求当前uri：`/list.html`
   
-  
 # 本周task
 
 # todolist  

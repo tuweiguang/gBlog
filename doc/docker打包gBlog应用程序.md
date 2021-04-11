@@ -126,7 +126,32 @@ server {
 
 >  nginx刷新配置：`nginx -s reload`
 
-## 6. 坑
+# 6. 推送至阿里云
+
+登陆阿里云搜`容器镜像服务`，然后按照提示创建`个人版实例`，创建完后创建镜像仓库并且与自己的GitHub账户绑定，然后设置自定义自动构建规则，当提交代码至GitHub将自动构建镜像。
+
+1. 登录阿里云Docker Registry
+
+```shell
+sudo docker login --username=xxx registry.cn-shanghai.aliyuncs.com
+```
+> 然后输入登陆阿里云的密码
+2. 从Registry中拉取镜像
+
+```shell
+sudo docker pull registry.cn-shanghai.aliyuncs.com/gblog/gblog:[镜像版本号]
+```
+3. 将镜像推送到Registry
+
+```shell
+sudo docker login --username=xxx registry.cn-shanghai.aliyuncs.com
+sudo docker tag [ImageId] registry.cn-shanghai.aliyuncs.com/gblog/gblog:[镜像版本号]
+sudo docker push registry.cn-shanghai.aliyuncs.com/gblog/gblog:[镜像版本号]
+```
+
+> 将本地生成的镜像推送至阿里云的私有仓库
+
+## 7. 坑
 
 1. web服务连接MySQL失败？
 
@@ -160,11 +185,11 @@ server {
 
     
 
-## 7. todolist
+## 8. todolist
 
 1. 将标准输出日志打印到日志
 2. 开启dump core文件
-3. 打包镜像，并且提交到阿里云仓库
+3. ~~打包镜像，并且提交到阿里云仓库~~
 4. ~~docker本地时间设置~~
 5. 完善Dockerfile
 
