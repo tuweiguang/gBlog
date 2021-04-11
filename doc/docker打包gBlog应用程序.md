@@ -107,7 +107,7 @@ docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog -v /data/gBlog_log/:
 ```
 server {
         listen       80;
-        server_name  xxx.xxx.xxx.xxx;
+        server_name  xxx.xxx.xxx.xxx; #ECS公网ip或域名
 
         #charset koi8-r;
 
@@ -165,7 +165,7 @@ server {
 1. 将标准输出日志打印到日志
 2. 开启dump core文件
 3. 打包镜像，并且提交到阿里云仓库
-4. docker本地时间设置
+4. ~~docker本地时间设置~~
 5. 完善Dockerfile
 
 
