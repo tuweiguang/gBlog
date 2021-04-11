@@ -6,5 +6,5 @@
 *.exe
 *.log
 
-go.mod
-go.sum
+*.mod
+*.sum
