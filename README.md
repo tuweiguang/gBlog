@@ -86,9 +86,10 @@ main总体流程：
   2. 增加访问源地区记录
   3. 加密加盐
   4. 修复bug：访问一次`/list.html`增加2次PV? `front-list.html`中body属性包含url()，空的地址，所以默认会请求当前uri：`/list.html`
-  
+   
 # 本周task
-
+  1. 后台首页，显示访问来源图，每日UV/PV图，ECS的各种指标数据。
+  
 # todolist  
 - 未来
   1. 了解corba
