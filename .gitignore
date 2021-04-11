@@ -5,3 +5,6 @@
 # 忽略某类型文件
 *.exe
 *.log
+
+go.mod
+go.sum
