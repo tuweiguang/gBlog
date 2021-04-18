@@ -40,11 +40,13 @@ EXPOSE 8080
 #pprof端口
 EXPOSE 6060
 
-ENTRYPOINT ["./gblog"]
+#ENTRYPOINT ["./gBlog"]
+ENTRYPOINT ./gBlog 1>>./log/$(date +%Y%m%d%H%M%S)"_stdout.log" 2>>./log/$(date +%Y%m%d%H%M%S)"_stderr.log"
 ```
 
 > - COPY：源路径需要是相对路径，不然失败？？
 > - Dockerfile文件要和应用项目在一个目录
+> - [CMD和ENTRYPOINT命令详解](https://www.jb51.net/article/136264.htm)
 
 **<u>注意：每次重新构建,都需要修改`conf/app.toml`和`conf/db.toml`文件</u>**
 
@@ -187,11 +189,12 @@ sudo docker push registry.cn-shanghai.aliyuncs.com/gblog/gblog:[镜像版本号]
 
 ## 8. todolist
 
-1. 将标准输出日志打印到日志
+1. ~~将标准输出日志打印到日志~~
 2. 开启dump core文件
 3. ~~打包镜像，并且提交到阿里云仓库~~
 4. ~~docker本地时间设置~~
 5. 完善Dockerfile
+6. 把`/data/conf`目录映射出来
 
 
 
