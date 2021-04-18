@@ -13,7 +13,7 @@ import (
 // 非login接口
 func Validate(e *gin.Engine) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookie, err := c.Cookie("sessionId")
+		cookie, err := c.Cookie(config.GetSessionConfig().Name)
 		if err == nil {
 			// 到本地或者redis里面去验证sessionId
 			if status := session.NewMemoryMgr().CheckSession(cookie); status > session.SessionExist {
@@ -50,7 +50,7 @@ func Validate(e *gin.Engine) gin.HandlerFunc {
 func StatisticsPVAndUV(e *gin.Engine) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		comCtl := new(homepage.CommonCtl)
-		cookie, err := c.Cookie("sessionId")
+		cookie, err := c.Cookie(config.GetAccessionSessionConfig().Name)
 		if err == nil {
 			// 到本地或者redis里面去验证sessionId
 			if status := session.NewMemoryMgr().CheckSession(cookie); status > session.SessionExist {
@@ -63,9 +63,9 @@ func StatisticsPVAndUV(e *gin.Engine) gin.HandlerFunc {
 
 				//设置cookie
 				sessionId := session.NewMemoryMgr().CreateSessoin()
-				c.SetCookie(config.GetSessionConfig().Name, sessionId, config.GetSessionConfig().Expire,
-					config.GetSessionConfig().Path, config.GetSessionConfig().Domain, config.GetSessionConfig().Secure,
-					config.GetSessionConfig().HttpOnly)
+				c.SetCookie(config.GetAccessionSessionConfig().Name, sessionId, config.GetAccessionSessionConfig().Expire,
+					config.GetAccessionSessionConfig().Path, config.GetAccessionSessionConfig().Domain,
+					config.GetAccessionSessionConfig().Secure, config.GetAccessionSessionConfig().HttpOnly)
 
 				//增加UV
 				comCtl.UV(c)
@@ -73,9 +73,9 @@ func StatisticsPVAndUV(e *gin.Engine) gin.HandlerFunc {
 		} else {
 			//设置cookie
 			sessionId := session.NewMemoryMgr().CreateSessoin()
-			c.SetCookie(config.GetSessionConfig().Name, sessionId, config.GetSessionConfig().Expire,
-				config.GetSessionConfig().Path, config.GetSessionConfig().Domain, config.GetSessionConfig().Secure,
-				config.GetSessionConfig().HttpOnly)
+			c.SetCookie(config.GetAccessionSessionConfig().Name, sessionId, config.GetAccessionSessionConfig().Expire,
+				config.GetAccessionSessionConfig().Path, config.GetAccessionSessionConfig().Domain,
+				config.GetAccessionSessionConfig().Secure, config.GetAccessionSessionConfig().HttpOnly)
 			comCtl.UV(c)
 		}
 		comCtl.PV(c)

@@ -23,7 +23,7 @@ func (l *LoginCrl) Login(c *gin.Context) {
 			return
 		}
 		if models.CheckPassword(info.Username, info.Password) {
-			sessionId, err := c.Cookie("sessionId")
+			sessionId, err := c.Cookie(config.GetSessionConfig().Name)
 			if err != nil {
 				// 第一次来，没有sessionid，-->给用户建一个sessiondata，分配一个sessionid
 				sessionId = session.NewMemoryMgr().CreateSessoin()

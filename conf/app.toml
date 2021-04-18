@@ -12,5 +12,13 @@
     secure = false
     httpOnly = true
 
+[accessSession]
+    name = "accessId" # 博客对外访问session name
+    expire = 3600 # session过期时间,秒
+    path = "/"
+    domain = "localhost"
+    secure = false
+    httpOnly = true
+
 [blog]
     title = "Welcome to Twilight"

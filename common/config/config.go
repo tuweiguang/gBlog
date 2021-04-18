@@ -36,10 +36,11 @@ func (db *DB) String() string {
 var db *DBConfig
 
 type APPConfig struct {
-	Title   string
-	App     *APP     `toml:"app"`
-	Session *Session `toml:"session"`
-	Blog    *Blog    `toml:"blog"`
+	Title         string
+	App           *APP     `toml:"app"`
+	Session       *Session `toml:"session"`
+	AccessSession *Session `toml:"accessSession"`
+	Blog          *Blog    `toml:"blog"`
 }
 
 type APP struct {
@@ -124,6 +125,13 @@ func GetSessionConfig() *Session {
 		return &Session{}
 	}
 	return app.Session
+}
+
+func GetAccessionSessionConfig() *Session {
+	if app.AccessSession == nil {
+		return &Session{}
+	}
+	return app.AccessSession
 }
 
 func GetBlogConfig() *Blog {
