@@ -91,7 +91,7 @@ docker build -t gblog_image:0.1 .
 ## 4. 运行
 
 ```bash
-docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog -v /data/gBlog_log/:/data/gblog/log -v /data/conf:/data/gblog/conf -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime --privileged=true gblog_image:0.1
+docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog -v /data/gBlog_log/:/data/gblog/log -v /data/conf:/data/gblog/conf -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime --privileged=true registry.cn-shanghai.aliyuncs.com/gblog/gblog
 ```
 
 > - -d：后台运行
