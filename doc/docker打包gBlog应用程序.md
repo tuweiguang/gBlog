@@ -91,7 +91,7 @@ docker build -t gblog_image:0.1 .
 ## 4. 运行
 
 ```bash
-docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog -v /data/gBlog_log/:/data/gblog/log -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime --privileged=true gblog_image:0.1
+docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog -v /data/gBlog_log/:/data/gblog/log -v /data/conf:/data/gblog/conf -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime --privileged=true gblog_image:0.1
 ```
 
 > - -d：后台运行
@@ -236,7 +236,7 @@ sudo docker push registry.cn-shanghai.aliyuncs.com/gblog/gblog:[镜像版本号]
 3. ~~打包镜像，并且提交到阿里云仓库~~
 4. ~~docker本地时间设置~~
 5. 完善Dockerfile
-6. 把`/data/conf`目录映射出来
+6. ~~把`/data/conf`目录映射出来~~
 
 
 

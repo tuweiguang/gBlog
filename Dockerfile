@@ -19,4 +19,5 @@ EXPOSE 8080
 #pprof端口
 EXPOSE 6060
 
-ENTRYPOINT ["./gBlog"]
+#ENTRYPOINT ["./gBlog"]
+ENTRYPOINT GOTRACEBACK=crash ./gBlog 1>>./log/$(date +%Y%m%d%H%M%S)"_stdout.log" 2>>./log/$(date +%Y%m%d%H%M%S)"_stderr.log"
