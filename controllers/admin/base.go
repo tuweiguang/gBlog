@@ -1,6 +1,7 @@
 package admin
 
-const LIMIT = 10 //一页10条记录
+const LIMIT = 10      //一页10条记录
+const PV_UV_LIMIT = 7 //显示PV/UV最近几天
 
 // 后台登录信息
 type LoginInfo struct {

@@ -41,7 +41,7 @@ EXPOSE 8080
 EXPOSE 6060
 
 #ENTRYPOINT ["./gBlog"]
-ENTRYPOINT ./gBlog 1>>./log/$(date +%Y%m%d%H%M%S)"_stdout.log" 2>>./log/$(date +%Y%m%d%H%M%S)"_stderr.log"
+ENTRYPOINT GOTRACEBACK=crash ./gBlog 1>>./log/$(date +%Y%m%d%H%M%S)"_stdout.log" 2>>./log/$(date +%Y%m%d%H%M%S)"_stderr.log"
 ```
 
 > - COPY：源路径需要是相对路径，不然失败？？
@@ -102,9 +102,51 @@ docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog -v /data/gBlog_log/:
 
 注意镜像不加版本默认使用最新版本latest。
 
+# 5. 访问
+
+- 访问
+
+方式一：
+
+```
+docker exec -it 容器ID /bin/bash
+```
+
+方式二：
+
+```
+docker attach 容器ID
+```
+
+> exec：在容器中打开新的终端，并且启动新的进程。
+>
+> attach：直接进入容器启动命令的终端，不会启动新的进程。
+>
+> 对于该系统使用exec方式进入。
 
 
-## 5. 配置nginx
+
+- 退出
+
+方式一：
+
+```
+ctrl+P+Q
+```
+
+方式二:
+
+```
+exit
+```
+
+> ctrl+P+Q：容器不停止退出
+>
+> exit：容器停止退出
+>
+> 对于该系统使用ctrl+P+Q方式退出。
+
+## 6. 配置nginx
 
 ```
 server {
@@ -128,7 +170,7 @@ server {
 
 >  nginx刷新配置：`nginx -s reload`
 
-# 6. 推送至阿里云
+# 7. 推送至阿里云
 
 登陆阿里云搜`容器镜像服务`，然后按照提示创建`个人版实例`，创建完后创建镜像仓库并且与自己的GitHub账户绑定，然后设置自定义自动构建规则，当提交代码至GitHub将自动构建镜像。
 
@@ -153,7 +195,7 @@ sudo docker push registry.cn-shanghai.aliyuncs.com/gblog/gblog:[镜像版本号]
 
 > 将本地生成的镜像推送至阿里云的私有仓库
 
-## 7. 坑
+## 8. 坑
 
 1. web服务连接MySQL失败？
 
@@ -187,10 +229,10 @@ sudo docker push registry.cn-shanghai.aliyuncs.com/gblog/gblog:[镜像版本号]
 
     
 
-## 8. todolist
+## 9. todolist
 
 1. ~~将标准输出日志打印到日志~~
-2. 开启dump core文件
+2. ~~开启dump core文件~~
 3. ~~打包镜像，并且提交到阿里云仓库~~
 4. ~~docker本地时间设置~~
 5. 完善Dockerfile

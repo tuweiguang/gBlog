@@ -38,8 +38,30 @@ func (u *UserCtl) List(c *gin.Context) {
 
 func (u *UserCtl) Welcome(c *gin.Context) {
 	df, _ := sys.Df()
+	var dates []string
+	var pv []int
+	var uv []int
+
+	now := time.Now()
+	for i := PV_UV_LIMIT; i > 0; i-- {
+		dates = append(dates, now.AddDate(0, 0, -i).Format("20060102"))
+	}
+
+	for _, date := range dates {
+		pv = append(pv, models.GetPVByDay(date))
+		uv = append(uv, models.GetUVByDay(date))
+	}
+
+	dates = nil
+	for i := PV_UV_LIMIT; i > 0; i-- {
+		dates = append(dates, now.AddDate(0, 0, -i).Format("0102"))
+	}
+
 	c.HTML(http.StatusOK, "welcome.html", gin.H{
-		"Df": df,
+		"Df":   df,
+		"PV":   pv,
+		"UV":   uv,
+		"Date": dates,
 	})
 }
 

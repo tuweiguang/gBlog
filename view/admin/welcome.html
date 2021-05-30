@@ -117,7 +117,7 @@
             xAxis : [
                 {
                     type : 'category',
-                    boundaryGap : false,
+                    boundaryGap : false, //从起点开始
                     data : {{$.Date}}
                 }
             ],
@@ -131,14 +131,14 @@
                     name:'PV',
                     type:'line',
                     areaStyle: {normal: {}},
-                    data:{{$.Pv}},
+                    data:{{$.PV}},
                     smooth: true
                 },
                 {
                     name:'UV',
                     type:'line',
                     areaStyle: {normal: {}},
-                    data:{{$.Uv}},
+                    data:{{$.UV}},
                     smooth: true,
 
                 }

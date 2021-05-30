@@ -3,8 +3,10 @@ package homepage
 import (
 	"fmt"
 	"gBlog/common/db"
+	"gBlog/common/log"
 	"gBlog/models"
 	"github.com/gin-gonic/gin"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -96,6 +98,19 @@ func (cc *CommonCtl) PV(c *gin.Context) {
 	} else {
 		models.AddArticlePV(uri)
 	}
+
+	go func(date string) {
+		defer func() {
+			if err := recover(); err != nil {
+				log.GetLog().Error(fmt.Sprintf("PV recover,err = %v", err))
+				log.GetLog().Error(string(debug.Stack()))
+				_ = log.GetLog().Sync()
+			}
+		}()
+
+		models.AddDailyPV(date)
+		models.AddDaliyUV(date)
+	}(time.Now().Format("20060102"))
 }
 
 //人数(根据cookie来判断)
