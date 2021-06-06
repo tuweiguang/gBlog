@@ -91,7 +91,7 @@ docker build -t gblog_image:0.1 .
 ## 4. 运行
 
 ```bash
-docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog -v /data/gBlog_log/:/data/gblog/log -v /data/conf:/data/gblog/conf -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime --privileged=true registry.cn-shanghai.aliyuncs.com/gblog/gblog
+docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog-$(date +%Y%m%d) -v /data/gBlog_log/:/data/gblog/log -v /data/conf:/data/gblog/conf -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime --privileged=true registry.cn-shanghai.aliyuncs.com/gblog/gblog
 ```
 
 > - -d：后台运行
@@ -240,5 +240,13 @@ sudo docker push registry.cn-shanghai.aliyuncs.com/gblog/gblog:[镜像版本号]
 
 
 
+# 10. docker应用部署更新流程
+
+1. 将代码上传至master分支
+2. 等待镜像打包完成
+3. `docker stop 容器ID`
+4. `sudo docker login --username=glw1717 registry.cn-shanghai.aliyuncs.com`，输入密码
+5. `sudo docker pull registry.cn-shanghai.aliyuncs.com/gblog/gblog`
+6. `docker run -d -it -p 8080:8080 -p 6060:6060 --name my-gblog-$(date +%Y%m%d) -v /data/gBlog_log/:/data/gblog/log -v /data/conf:/data/gblog/conf -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime --privileged=true registry.cn-shanghai.aliyuncs.com/gblog/gblog:latest`
 
 
