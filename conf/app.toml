@@ -24,4 +24,4 @@
     title = "Welcome to Twilight"
 
 [monitor]
-    dumpPath = "./"
+    dumpPath = "log/"
