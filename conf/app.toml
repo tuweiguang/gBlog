@@ -22,3 +22,6 @@
 
 [blog]
     title = "Welcome to Twilight"
+
+[monitor]
+    dumpPath = "./"

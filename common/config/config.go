@@ -41,6 +41,7 @@ type APPConfig struct {
 	Session       *Session `toml:"session"`
 	AccessSession *Session `toml:"accessSession"`
 	Blog          *Blog    `toml:"blog"`
+	Monitor       *Monitor `toml:"monitor"`
 }
 
 type APP struct {
@@ -61,6 +62,10 @@ type Session struct {
 
 type Blog struct {
 	Title string `toml:"title"`
+}
+
+type Monitor struct {
+	DumpPath string `toml:"dumpPath"`
 }
 
 var app *APPConfig
@@ -139,6 +144,13 @@ func GetBlogConfig() *Blog {
 		return &Blog{}
 	}
 	return app.Blog
+}
+
+func GetMonitorConfig() *Monitor {
+	if app.Monitor == nil {
+		return &Monitor{}
+	}
+	return app.Monitor
 }
 
 func GetLOGConfig() *LOG {

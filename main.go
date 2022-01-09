@@ -6,6 +6,7 @@ import (
 	"gBlog/common/config"
 	"gBlog/common/db"
 	"gBlog/common/log"
+	"gBlog/common/monitor"
 	"gBlog/controllers"
 	"net/http"
 	_ "net/http/pprof"
@@ -22,6 +23,7 @@ func main() {
 	config.Init() // flag: -conf ./conf 指定配置文件目录
 	log.Init()
 	db.Init()
+	monitor.Init(config.GetMonitorConfig().DumpPath)
 
 	// 开启pprof，监听请求
 	go func() {
